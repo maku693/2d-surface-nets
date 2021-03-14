@@ -1,8 +1,8 @@
 (() => {
   const c = document.getElementById("c");
 
-  c.width = 30;
-  c.height = 30;
+  c.width = 200;
+  c.height = 200;
 
   const ctx = c.getContext("2d");
   ctx.imageSmoothingEnabled = false;
@@ -13,10 +13,10 @@
   ctx.fillRect(0, 0, c.width, c.height);
 
   ctx.strokeStyle = "#ccc";
-  strokeGrid(ctx, 10);
+  strokeGrid(ctx, 20);
 
   ctx.fillStyle = "#f00";
-  fillCircle(ctx, 15, 15, 2);
+  fillCircle(ctx, 20, 20, 2);
 })();
 
 function strokeGrid(ctx, gridSize) {
