@@ -25,6 +25,7 @@ for (let i = GRID_SIZE; i < c.height; i += GRID_SIZE) {
 
 ctx.closePath();
 
+
 ctx.stroke();
 
 ctx.ellipse(150, 150, 2, 2, 0, 0, 2 * Math.PI);
