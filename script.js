@@ -84,6 +84,9 @@ function drawOutline(ctx) {
       ctx.lineTo(0, gridSize);
       ctx.lineTo(0, 0);
       ctx.endPath();
+
+  ctx.stroke();
+  ctx.fill();
       ctx.resetTransform();
     }
   }
