@@ -5,7 +5,9 @@ c.height = 300;
 
 const ctx = c.getContext("2d");
 
-ctx.save();
+ctx.translate(0.5, 0.5);
+
+ctx.strokeStyle = "#000";
 
 const GRID_SIZE = 10;
 
@@ -21,11 +23,11 @@ for (let i = GRID_SIZE; i < c.height; i += GRID_SIZE) {
   ctx.lineTo(c.width, i);
 }
 
+ctx.closePath();
+
 ctx.stroke();
 
-ctx.restore();
-
-ctx.ellipse(150, 150, 2, 2, 0, 0, 2 * Math.PI)
+ctx.ellipse(150, 150, 2, 2, 0, 0, 2 * Math.PI);
 
 ctx.fillStyle = "#f00";
 
