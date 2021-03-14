@@ -22,20 +22,17 @@ data[3][2] = 1;
   ctx.imageSmoothingEnabled = false;
 
   ctx.translate(0.5, 0.5);
-  
+
   drawBackground(c, ctx);
 
   drawData(ctx);
-
-  ctx.fillStyle = "#f00";
-  fillCircle(ctx, gridSize, gridSize, 2);
 })();
 
 function drawBackground(canvas, ctx) {
-  ctx.fillStyle = "#fff";
+  ctx.fillStyle = "white";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-  ctx.strokeStyle = "#ccc";
+  ctx.strokeStyle = "lightgray";
   strokeGrid(ctx, gridSize);
 }
 
@@ -57,24 +54,24 @@ function strokeGrid(ctx, gridSize) {
   ctx.stroke();
 }
 
-function fillCircle(ctx, x, y, radius) {
-  ctx.ellipse(x, y, radius, radius, 0, 0, 2 * Math.PI);
-  ctx.fill();
-}
-
 function drawData(ctx) {
+  ctx.fillStyle = "black";
   for (let y = 0; y < unitCount; y++) {
     for (let x = 0; x < unitCount; x++) {
-      ctx.fillStyle = `rgba(0, 0, 0, ${data[x][y]})`;
+      if (data[x][y] < Number.EPSILON) continue;
       ctx.fillRect(x * gridSize, y * gridSize, gridSize, gridSize);
     }
   }
 }
 
 function drawOutline(ctx) {
+  ctx.fillStyle = "transparent";
+  ctx.strokeStyle = "black";
   for (let y = 0; y < unitCount; y++) {
     for (let x = 0; x < unitCount; x++) {
-      ctx.fillStyle = `rgba(0, 0, 0, ${data[x][y]})`;
+      ctx.fillStyle = data[x][y];
+      ctx.moveTo(x * gridSize, y * gridSize);
+      ctx.moveTo(x * gridSize, y * gridSize);
       ctx.fillRect(x * gridSize, y * gridSize, gridSize, gridSize);
     }
   }
