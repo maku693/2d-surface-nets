@@ -26,6 +26,8 @@ data[3][2] = 1;
   drawBackground(c, ctx);
 
   drawData(ctx);
+
+  drawOutline(ctx);
 })();
 
 function drawBackground(canvas, ctx) {
@@ -56,6 +58,7 @@ function strokeGrid(ctx, gridSize) {
 
 function drawData(ctx) {
   ctx.fillStyle = "black";
+
   for (let y = 0; y < unitCount; y++) {
     for (let x = 0; x < unitCount; x++) {
       if (data[x][y] < Number.EPSILON) continue;
@@ -65,14 +68,25 @@ function drawData(ctx) {
 }
 
 function drawOutline(ctx) {
-  ctx.fillStyle = "transparent";
-  ctx.strokeStyle = "black";
+  ctx.fillStyle = "blue";
+  ctx.strokeStyle = "red";
+
   for (let y = 0; y < unitCount; y++) {
     for (let x = 0; x < unitCount; x++) {
-      ctx.fillStyle = data[x][y];
-      ctx.moveTo(x * gridSize, y * gridSize);
-      ctx.moveTo(x * gridSize, y * gridSize);
-      ctx.fillRect(x * gridSize, y * gridSize, gridSize, gridSize);
+      if (data[x][y] < Number.EPSISON) continue;
+      ctx.translate(x * gridSize, y * gridSize);
+      ctx.rect(0, 0, gridSize, gridSize);
+      ctx.stroke();
+      ctx.fill();
+      // ctx.beginPath();
+      // ctx.lineTo(gridSize, 0);
+      // ctx.lineTo(gridSize, gridSize);
+      // ctx.lineTo(0, gridSize);
+      // ctx.lineTo(0, 0);
+      // ctx.endPath();
+      ctx.resetTransform();
     }
   }
+
+  ctx.stroke();
 }
