@@ -1,35 +1,43 @@
-const c = document.getElementById("c");
+(() => {
+  const c = document.getElementById("c");
 
-c.width = 300;
-c.height = 300;
+  c.width = 30;
+  c.height = 30;
 
-const ctx = c.getContext("2d");
+  const ctx = c.getContext("2d");
+  ctx.imageSmoothingEnabled = false;
 
-ctx.translate(0.5, 0.5);
+  ctx.translate(0.5, 0.5);
 
-ctx.strokeStyle = "#000";
+  ctx.fillStyle = "#fff";
+  ctx.fillRect(0, 0, c.width, c.height);
 
-const GRID_SIZE = 10;
+  ctx.strokeStyle = "#ccc";
+  strokeGrid(ctx, 10);
 
-ctx.beginPath();
+  ctx.fillStyle = "#f00";
+  fillCircle(ctx, 15, 15, 2);
+})();
 
-for (let i = GRID_SIZE; i < c.width; i += GRID_SIZE) {
-  ctx.moveTo(i, 0);
-  ctx.lineTo(i, c.height);
+function strokeGrid(ctx, gridSize) {
+  ctx.beginPath();
+
+  for (let i = gridSize; i < ctx.canvas.width; i += gridSize) {
+    ctx.moveTo(i, 0);
+    ctx.lineTo(i, ctx.canvas.height);
+  }
+
+  for (let i = gridSize; i < ctx.canvas.height; i += gridSize) {
+    ctx.moveTo(0, i);
+    ctx.lineTo(ctx.canvas.width, i);
+  }
+
+  ctx.closePath();
+
+  ctx.stroke();
 }
 
-for (let i = GRID_SIZE; i < c.height; i += GRID_SIZE) {
-  ctx.moveTo(0, i);
-  ctx.lineTo(c.width, i);
+function fillCircle(ctx, x, y, radius) {
+  ctx.ellipse(x, y, radius, radius, 0, 0, 2 * Math.PI);
+  ctx.fill();
 }
-
-ctx.closePath();
-
-
-ctx.stroke();
-
-ctx.ellipse(150, 150, 2, 2, 0, 0, 2 * Math.PI);
-
-ctx.fillStyle = "#f00";
-
-ctx.fill();
