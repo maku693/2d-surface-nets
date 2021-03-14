@@ -74,17 +74,19 @@ function drawOutline(ctx) {
   for (let y = 0; y < unitCount; y++) {
     for (let x = 0; x < unitCount; x++) {
       if (data[x][y] < Number.EPSISON) continue;
+      // ctx.rect(x * gridSize, y * gridSize, gridSize, gridSize);
+      ctx.beginPath();
       ctx.translate(x * gridSize, y * gridSize);
       ctx.rect(0, 0, gridSize, gridSize);
-      ctx.stroke();
-      ctx.fill();
-      // ctx.beginPath();
+      ctx.moveTo(0, 0);
       // ctx.lineTo(gridSize, 0);
       // ctx.lineTo(gridSize, gridSize);
       // ctx.lineTo(0, gridSize);
       // ctx.lineTo(0, 0);
       // ctx.endPath();
-      ctx.resetTransform();
+      // ctx.resetTransform();
+      ctx.stroke();
+      ctx.fill();
     }
   }
 
