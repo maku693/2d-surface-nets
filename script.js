@@ -1,17 +1,32 @@
-const c = document.getElementsById("c");
+const c = document.getElementById("c");
 
 c.width = 300;
 c.height = 300;
 
 const ctx = c.getContext("2d");
 
-ctx.draw;
+ctx.save();
 
 const GRID_SIZE = 10;
 
-for (let i = 0; i < c.width; i += 10) {
+ctx.beginPath();
+
+for (let i = GRID_SIZE; i < c.width; i += GRID_SIZE) {
   ctx.moveTo(i, 0);
-  ctx.lineTo(c.height, 0);
+  ctx.lineTo(i, c.height);
+}
+
+for (let i = GRID_SIZE; i < c.height; i += GRID_SIZE) {
+  ctx.moveTo(0, i);
+  ctx.lineTo(c.width, i);
 }
 
 ctx.stroke();
+
+ctx.restore();
+
+ctx.ellipse(150, 150, 2, 2, 0, 0, 2 * Math.PI)
+
+ctx.fillStyle = "#f00";
+
+ctx.fill();
