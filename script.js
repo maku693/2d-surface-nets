@@ -1,3 +1,5 @@
+const data = Array.from({ length: 10 * 10 });
+
 (() => {
   const c = document.getElementById("c");
 
