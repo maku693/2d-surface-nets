@@ -1,6 +1,6 @@
-const spaceSize = 200;
+const worldSize = 200;
 const unitCount = 5;
-const gridSize = spaceSize / unitCount;
+const gridSize = worldSize / unitCount;
 
 const data = Array.from({ length: unitCount }, () =>
   Array.from({ length: unitCount }).fill(0)
@@ -15,19 +15,18 @@ data[3][2] = 1;
 (() => {
   const c = document.getElementById("c");
 
-  c.width = spaceSize;
-  c.height = spaceSize;
+  c.width = worldSize;
+  c.height = worldSize;
 
   const ctx = c.getContext("2d");
-  ctx.imageSmoothingEnabled = false;
 
-  ctx.translate(0.5, 0.5);
+  ctx.lineWidth = 2;
 
   drawBackground(c, ctx);
 
   drawData(ctx);
 
-  drawOutline(ctx);
+  drawOutlineStupid(ctx);
 })();
 
 function drawBackground(canvas, ctx) {
@@ -68,29 +67,46 @@ function drawData(ctx) {
   }
 }
 
-function drawOutline(ctx) {
-  ctx.fillStyle = "blue";
+function drawOutlineStupid(ctx) {
   ctx.strokeStyle = "red";
 
   for (let y = 0; y < unitCount; y++) {
     for (let x = 0; x < unitCount; x++) {
       if (data[x][y] < Number.EPSILON) continue;
       ctx.translate(x * gridSize, y * gridSize);
+
       ctx.beginPath();
-      // ctx.moveTo(0, 0);
-      ctx.rect(0, 0, gridSize, gridSize);
       ctx.lineTo(gridSize, 0);
       ctx.lineTo(gridSize, gridSize);
       ctx.lineTo(0, gridSize);
       ctx.lineTo(0, 0);
-      ctx.endPath();
+      ctx.closePath();
 
-  ctx.stroke();
-  ctx.fill();
+      ctx.stroke();
+
       ctx.resetTransform();
     }
   }
+}
 
-  ctx.stroke();
-  ctx.fill();
+function drawOutlineCulled(ctx) {
+  ctx.strokeStyle = "red";
+
+  for (let y = 0; y < unitCount; y++) {
+    for (let x = 0; x < unitCount; x++) {
+      if (data[x][y] < Number.EPSILON) continue;
+      ctx.translate(x * gridSize, y * gridSize);
+
+      ctx.beginPath();
+      ctx.lineTo(gridSize, 0);
+      ctx.lineTo(gridSize, gridSize);
+      ctx.lineTo(0, gridSize);
+      ctx.lineTo(0, 0);
+      ctx.closePath();
+
+      ctx.stroke();
+
+      ctx.resetTransform();
+    }
+  }
 }
