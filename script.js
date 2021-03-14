@@ -6,15 +6,11 @@ const data = Array.from({ length: unitCount }, () =>
   Array.from({ length: unitCount }).fill(0)
 );
 
-data[1][1] = .5;
 data[1][2] = 1;
-data[1][3] = .5;
 data[2][1] = 1;
 data[2][2] = 1;
 data[2][3] = 1;
-data[3][1] = .5;
 data[3][2] = 1;
-data[3][3] = .5;
 
 (() => {
   const c = document.getElementById("c");
