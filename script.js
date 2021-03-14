@@ -62,6 +62,7 @@ function drawData(ctx) {
   for (let y = 0; y < unitCount; y++) {
     for (let x = 0; x < unitCount; x++) {
       if (data[x][y] < Number.EPSILON) continue;
+      console.log("!!!");
       ctx.fillRect(x * gridSize, y * gridSize, gridSize, gridSize);
     }
   }
@@ -73,22 +74,20 @@ function drawOutline(ctx) {
 
   for (let y = 0; y < unitCount; y++) {
     for (let x = 0; x < unitCount; x++) {
-      if (data[x][y] < Number.EPSISON) continue;
-      // ctx.rect(x * gridSize, y * gridSize, gridSize, gridSize);
-      ctx.beginPath();
+      if (data[x][y] < Number.EPSILON) continue;
       ctx.translate(x * gridSize, y * gridSize);
+      ctx.beginPath();
+      // ctx.moveTo(0, 0);
       ctx.rect(0, 0, gridSize, gridSize);
-      ctx.moveTo(0, 0);
-      // ctx.lineTo(gridSize, 0);
-      // ctx.lineTo(gridSize, gridSize);
-      // ctx.lineTo(0, gridSize);
-      // ctx.lineTo(0, 0);
-      // ctx.endPath();
-      // ctx.resetTransform();
-      ctx.stroke();
-      ctx.fill();
+      ctx.lineTo(gridSize, 0);
+      ctx.lineTo(gridSize, gridSize);
+      ctx.lineTo(0, gridSize);
+      ctx.lineTo(0, 0);
+      ctx.endPath();
+      ctx.resetTransform();
     }
   }
 
   ctx.stroke();
+  ctx.fill();
 }
