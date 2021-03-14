@@ -70,3 +70,12 @@ function drawData(ctx) {
     }
   }
 }
+
+function drawOutline(ctx) {
+  for (let y = 0; y < unitCount; y++) {
+    for (let x = 0; x < unitCount; x++) {
+      ctx.fillStyle = `rgba(0, 0, 0, ${data[x][y]})`;
+      ctx.fillRect(x * gridSize, y * gridSize, gridSize, gridSize);
+    }
+  }
+}
