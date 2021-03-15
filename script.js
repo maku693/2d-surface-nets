@@ -98,17 +98,21 @@ function drawOutlineCulled(ctx) {
 
       ctx.beginPath();
       if (y > 0 && data[x][y - 1] < Number.EPSILON) {
+        ctx.moveTo(0, 0);
         ctx.lineTo(gridSize, 0);
-      } else {
-        ctx.moveTo(gridSize, 0);
       }
       if (x < unitCount - 1 && data[x + 1][y] < Number.EPSILON) {
+        ctx.moveTo(gridSize, 0);
         ctx.lineTo(gridSize, gridSize);
-      } else {
-        ctx.moveTo(gridSize, gridSize);
       }
-      ctx.lineTo(0, gridSize);
-      ctx.lineTo(0, 0);
+      if (y < unitCount - 1 && data[x][y + 1] < Number.EPSILON) {
+        ctx.moveTo(gridSize, gridSize);
+        ctx.lineTo(0, gridSize);
+      }
+      if (x > 0 && data[x - 1][y] < Number.EPSILON) {
+        ctx.moveTo(0, gridSize);
+        ctx.lineTo(0, 0);
+      }
       ctx.closePath();
 
       ctx.stroke();
