@@ -2,9 +2,7 @@ const worldSize = 200;
 const unitCount = 5;
 const gridSize = worldSize / unitCount;
 
-const data = Array.from({ length: unitCount }, () =>
-  Array.from({ length: unitCount }).fill(0)
-);
+const data = new Array(unitCount).fill(new Array(unitCount).fill(0));
 
 data[1][1] = 0.5;
 data[1][2] = 1;
@@ -16,7 +14,9 @@ data[3][1] = 0.5;
 data[3][2] = 1;
 data[3][3] = 0.5;
 
-(() => {
+const data2 = Array.from({ length: 0 }, () =>
+  Array.from({ length: unitCount })
+)(() => {
   const c = document.getElementById("c");
 
   c.width = worldSize;
@@ -158,4 +158,3 @@ function drawOutlineCulledSmooth(ctx) {
     }
   }
 }
-
