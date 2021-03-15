@@ -51,7 +51,7 @@ data2[4][4] = 0.5;
 
   drawData(ctx);
 
-  drawOutlineCulledSmooth(ctx);
+  drawOutlineCulled(ctx);
 })();
 
 function drawBackground(canvas, ctx) {
@@ -154,13 +154,26 @@ function drawOutlineCulledSmooth(ctx) {
       if (data[x][y] === 0) continue;
       ctx.translate(x * gridSize, y * gridSize);
 
+      const isTop = y === 0;
+      const isBottom = y === data.length - 1;
+      const isLeft = x === 0;
+      const isRight = x === data.length - 1;
       const surroundings = [
-        x > 0 && y > 0 ? data[x - 1][y - 1] : 0,
-        y > 0 ? data[x][y - 1] : 0,
-        x  && y > 0 ? data[x - 1][y - 1] : 0,
+        !isLeft && !isTop ? data[x - 1][y - 1] : 0,
+        !isTop ? data[x][y - 1] : 0,
+        !isRight && !isTop ? data[x + 1][y - 1] : 0,
+        !isLeft ? data[x - 1][y] : 0,
+        data[x][y],
+        !isRight ? data[x + 1][y] : 0,
+        !isLeft && !isBottom ? data[x - 1][y - 1] : 0,
+        !isBottom ? data[x][y - 1] : 0,
+        !isRight && !isBottom ? data[x + 1][y - 1] : 0
       ];
       const vertices = [
-        { x: gridSize * data[x][y], y: gridSize * data[x][y] },
+        { x: 0, y: 0 },
+        { x: 1, y: 0 },
+        { x: 0, y: 1 },
+        { x: 1, y: 1 },
       ];
 
       ctx.beginPath();
