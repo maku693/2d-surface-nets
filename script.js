@@ -16,27 +16,6 @@ data[3][1] = 0.5;
 data[3][2] = 1;
 data[3][3] = 0.5;
 
-const data2 = Array.from({ length: unitCount + 1 }, () =>
-  new Array(unitCount + 1).fill(0)
-);
-
-data2[1][1] = 0.5;
-data2[1][2] = 1;
-data2[1][3] = 1;
-data2[1][4] = 0.5;
-data2[2][1] = 1;
-data2[2][2] = 1;
-data2[2][3] = 1;
-data2[2][4] = 1;
-data2[3][1] = 1;
-data2[3][2] = 1;
-data2[3][3] = 1;
-data2[3][4] = 1;
-data2[4][1] = 0.5;
-data2[4][2] = 1;
-data2[4][3] = 1;
-data2[4][4] = 0.5;
-
 (() => {
   const c = document.getElementById("c");
 
@@ -51,7 +30,7 @@ data2[4][4] = 0.5;
 
   drawData(ctx);
 
-  drawOutlineCulled(ctx);
+  drawOutlineCulledSmooth(ctx);
 })();
 
 function drawBackground(canvas, ctx) {
@@ -149,11 +128,11 @@ function drawOutlineCulled(ctx) {
 function drawOutlineCulledSmooth(ctx) {
   ctx.strokeStyle = "red";
 
+  // ctx.beginPath();
+
   for (let y = 0; y < unitCount; y++) {
     for (let x = 0; x < unitCount; x++) {
       if (data[x][y] === 0) continue;
-      ctx.translate(x * gridSize, y * gridSize);
-
       const isTop = y === 0;
       const isBottom = y === data.length - 1;
       const isLeft = x === 0;
@@ -176,7 +155,6 @@ function drawOutlineCulledSmooth(ctx) {
         { x: 1, y: 1 },
       ];
 
-      ctx.beginPath();
       if (y > 0 && data[x][y - 1] === 0) {
         ctx.moveTo(gridSize * data[x][y], gridSize * data[x][y]);
         ctx.lineTo(gridSize, 0);
@@ -193,11 +171,11 @@ function drawOutlineCulledSmooth(ctx) {
         ctx.moveTo(0, gridSize);
         ctx.lineTo(0, 0);
       }
-      ctx.closePath();
-
-      ctx.stroke();
 
       ctx.resetTransform();
     }
   }
+      ctx.closePath();
+
+  // ctx.stroke();
 }
