@@ -56,7 +56,7 @@ function strokeGrid(ctx, gridSize) {
 }
 
 function drawData(ctx) {
-  ctx.fillStyle = "black";
+  ctx.fillStyle = "gray";
 
   for (let y = 0; y < unitCount; y++) {
     for (let x = 0; x < unitCount; x++) {
