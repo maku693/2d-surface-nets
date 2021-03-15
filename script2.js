@@ -2,40 +2,26 @@ const worldSize = 200;
 const unitCount = 5;
 const gridSize = worldSize / unitCount;
 
-const data = Array.from({ length: unitCount }, () =>
-  new Array(unitCount).fill(0)
+const data = Array.from({ length: unitCount + 1 }, () =>
+  new Array(unitCount + 1).fill(0)
 );
 
 data[1][1] = 0.5;
 data[1][2] = 1;
-data[1][3] = 0.5;
+data[1][3] = 1;
+data[1][4] = 0.5;
 data[2][1] = 1;
 data[2][2] = 1;
 data[2][3] = 1;
-data[3][1] = 0.5;
+data[2][4] = 1;
+data[3][1] = 1;
 data[3][2] = 1;
-data[3][3] = 0.5;
-
-const data2 = Array.from({ length: unitCount + 1 }, () =>
-  new Array(unitCount + 1).fill(0)
-);
-
-data2[1][1] = 0.5;
-data2[1][2] = 1;
-data2[1][3] = 1;
-data2[1][4] = 0.5;
-data2[2][1] = 1;
-data2[2][2] = 1;
-data2[2][3] = 1;
-data2[2][4] = 1;
-data2[3][1] = 1;
-data2[3][2] = 1;
-data2[3][3] = 1;
-data2[3][4] = 1;
-data2[4][1] = 0.5;
-data2[4][2] = 1;
-data2[4][3] = 1;
-data2[4][4] = 0.5;
+data[3][3] = 1;
+data[3][4] = 1;
+data[4][1] = 0.5;
+data[4][2] = 1;
+data[4][3] = 1;
+data[4][4] = 0.5;
 
 (() => {
   const c = document.getElementById("c");
@@ -81,8 +67,8 @@ function strokeGrid(ctx, gridSize) {
 }
 
 function drawData(ctx) {
-  for (let y = 0; y < unitCount; y++) {
-    for (let x = 0; x < unitCount; x++) {
+  for (let y = 0; y < data[0].length; y++) {
+    for (let x = 0; x < data.length; x++) {
       if (data[x][y] === 0) continue;
       ctx.fillStyle = `rgba(0, 0, 0, ${data[x][y]})`;
       ctx.fillRect(x * gridSize, y * gridSize, gridSize, gridSize);
