@@ -2,8 +2,8 @@ const worldSize = 200;
 const unitCount = 5;
 const gridSize = worldSize / unitCount;
 
-const data = Array.from({ length: unitCount + 1 }, () =>
-  new Array(unitCount + 1).fill(0)
+const data = Array.from({ length: unitCount}, () =>
+  new Array(unitCount).fill(0)
 );
 
 data[1][1] = 0.5;
@@ -70,7 +70,13 @@ function drawData(ctx) {
   for (let y = 0; y < data[0].length; y++) {
     for (let x = 0; x < data.length; x++) {
       if (data[x][y] === 0) continue;
-      ctx.fillStyle = `rgba(0, 0, 0, ${data[x][y]})`;
+      const strength = [
+        data[x][y],
+        x < data.length ? data[x + 1][y] : 0,
+        y < data[0].length ? data[x][y + 1] : 0,
+        x < data.length && y < data[0].length ? data[x + 1][y + 1] : 0
+      ].reduce((curr, prev) => curr + prev, 0);
+      ctx.fillStyle = `rgba(0, 0, 0, ${strength})`;
       ctx.fillRect(x * gridSize, y * gridSize, gridSize, gridSize);
     }
   }
