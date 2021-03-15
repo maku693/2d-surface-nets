@@ -151,23 +151,32 @@ function drawOutlineCulledSmooth(ctx) {
 
   for (let y = 0; y < unitCount; y++) {
     for (let x = 0; x < unitCount; x++) {
-      if (data[x][y] < 1) continue;
+      if (data[x][y] === 0) continue;
       ctx.translate(x * gridSize, y * gridSize);
 
+      const surroundings = [
+        x > 0 && y > 0 ? data[x - 1][y - 1] : 0,
+        y > 0 ? data[x][y - 1] : 0,
+        x  && y > 0 ? data[x - 1][y - 1] : 0,
+      ];
+      const vertices = [
+        { x: gridSize * data[x][y], y: gridSize * data[x][y] },
+      ];
+
       ctx.beginPath();
-      if (y > 0 && data[x][y - 1] < 1) {
-        ctx.moveTo(0, 0);
+      if (y > 0 && data[x][y - 1] === 0) {
+        ctx.moveTo(gridSize * data[x][y], gridSize * data[x][y]);
         ctx.lineTo(gridSize, 0);
       }
-      if (x < unitCount - 1 && data[x + 1][y] < 1) {
+      if (x < unitCount - 1 && data[x + 1][y] === 0) {
         ctx.moveTo(gridSize, 0);
         ctx.lineTo(gridSize, gridSize);
       }
-      if (y < unitCount - 1 && data[x][y + 1] < 1) {
+      if (y < unitCount - 1 && data[x][y + 1] === 0) {
         ctx.moveTo(gridSize, gridSize);
         ctx.lineTo(0, gridSize);
       }
-      if (x > 0 && data[x - 1][y] < 1) {
+      if (x > 0 && data[x - 1][y] === 0) {
         ctx.moveTo(0, gridSize);
         ctx.lineTo(0, 0);
       }
