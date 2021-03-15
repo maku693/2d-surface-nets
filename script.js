@@ -26,7 +26,7 @@ data[3][2] = 1;
 
   drawData(ctx);
 
-  drawOutlineStupid(ctx);
+  drawOutlineCulled(ctx);
 })();
 
 function drawBackground(canvas, ctx) {
@@ -61,7 +61,6 @@ function drawData(ctx) {
   for (let y = 0; y < unitCount; y++) {
     for (let x = 0; x < unitCount; x++) {
       if (data[x][y] < Number.EPSILON) continue;
-      console.log("!!!");
       ctx.fillRect(x * gridSize, y * gridSize, gridSize, gridSize);
     }
   }
@@ -98,8 +97,16 @@ function drawOutlineCulled(ctx) {
       ctx.translate(x * gridSize, y * gridSize);
 
       ctx.beginPath();
-      ctx.lineTo(gridSize, 0);
-      ctx.lineTo(gridSize, gridSize);
+      if (y > 0 && data[x][y - 1] < Number.EPSILON) {
+        ctx.lineTo(gridSize, 0);
+      } else {
+        ctx.moveTo(gridSize, 0);
+      }
+      if (x < unitCount - 1 && data[x + 1][y] < Number.EPSILON) {
+        ctx.lineTo(gridSize, gridSize);
+      } else {
+        ctx.moveTo(gridSize, gridSize);
+      }
       ctx.lineTo(0, gridSize);
       ctx.lineTo(0, 0);
       ctx.closePath();
