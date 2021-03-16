@@ -154,6 +154,8 @@ function drawOutlineCulledSmooth(ctx) {
         { x: 0, y: 1 },
         { x: 1, y: 1 },
       ];
+      
+      ctx.moveTo()
 
       if (y > 0 && data[x][y - 1] === 0) {
         ctx.moveTo(gridSize * data[x][y], gridSize * data[x][y]);
