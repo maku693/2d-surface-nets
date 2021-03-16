@@ -5,12 +5,12 @@ const samples = grids + 1;
 
 const data = Array.from({ length: samples }, () => new Array(samples).fill(0));
 
-data[2][3] = -1;
-data[3][2] = -1;
-data[3][3] = -1;
-data[3][4] = -1;
-// data[4][3] = -1;
-data[4][4] = -1;
+data[2][3] = 1;
+data[3][2] = 1;
+data[3][3] = 1;
+data[3][4] = 1;
+data[4][3] = 1;
+// data[4][4] = -1;
 
 (() => {
   const c = document.getElementById("c");
@@ -59,7 +59,7 @@ function drawData(ctx) {
   for (let y = 0; y < samples; y++) {
     for (let x = 0; x < samples; x++) {
       if (data[x][y] === 0) continue;
-      ctx.fillStyle = `rgba(255, 0, 0, ${-data[x][y]})`;
+      ctx.fillStyle = `rgba(255, 0, 0, ${data[x][y]})`;
       fillCircle(ctx, x * gridSize, y * gridSize, 2);
     }
   }
@@ -76,10 +76,10 @@ function drawSurface(ctx) {
         data[x][y + 1],
         data[x + 1][y + 1]
       ];
-      
+
       console.log(surroundings);
 
-      if (!(surroundings.some(x => x < 0) && surroundings.some(x => 0 <= x)))
+      if (!(surroundings.some(x => x === 0) && surroundings.some(x => 0 < x)))
         continue;
 
       ctx.fillStyle = "blue";
