@@ -3,15 +3,6 @@ const gridSize = 40;
 const grids = worldSize / gridSize;
 const samples = grids + 1;
 
-const data = Array.from({ length: samples }, () => new Array(samples).fill(0));
-
-data[2][3] = 1;
-data[3][2] = 1;
-data[3][3] = 1;
-data[3][4] = 1;
-data[4][3] = 1;
-// data[4][4] = -1;
-
 (() => {
   const c = document.getElementById("c");
 
@@ -24,9 +15,24 @@ data[4][3] = 1;
 
   drawBackground(c, ctx);
 
-  drawData(ctx);
+  const data = Array.from({ length: samples }, () =>
+    new Array(samples).fill(0)
+  );
 
-  drawSurface(ctx);
+  data[2][3] = 1;
+  data[3][2] = 1;
+  data[3][3] = 1;
+  data[3][4] = 1;
+  data[4][3] = 1;
+  // data[4][4] = -1;
+
+  drawData(ctx, data);
+
+  const intersections = findIntersections(ctx, data);
+
+  drawIntersectedGrids(ctx, intersections);
+
+  drawSurface(ctx, data);
 })();
 
 function drawBackground(canvas, ctx) {
@@ -55,7 +61,7 @@ function strokeGrid(ctx, gridSize) {
   ctx.stroke();
 }
 
-function drawData(ctx) {
+function drawData(ctx, data) {
   for (let y = 0; y < samples; y++) {
     for (let x = 0; x < samples; x++) {
       if (data[x][y] === 0) continue;
@@ -65,7 +71,38 @@ function drawData(ctx) {
   }
 }
 
-function drawSurface(ctx) {
+function findIntersections(ctx, data) {
+  const intersections = [];
+  for (let y = 0; y < grids; y++) {
+    for (let x = 0; x < grids; x++) {
+      const surroundings = [
+        data[x][y],
+        data[x + 1][y],
+        data[x][y + 1],
+        data[x + 1][y + 1]
+      ];
+
+      if (surroundings.some(i => i === 0) && surroundings.some(i => 0 < i)) {
+        intersections.push([x, y]);
+      }
+    }
+  }
+  return intersections;
+}
+
+function drawIntersectedGrids(ctx, intersections) {
+  for (let intersection of intersections) {
+    ctx.fillStyle = "#f008";
+    ctx.fillRect(
+      intersection[0] * gridSize,
+      intersection[1] * gridSize,
+      gridSize,
+      gridSize
+    );
+  }
+}
+
+function drawSurface(ctx, data) {
   for (let y = 0; y < grids; y++) {
     for (let x = 0; x < grids; x++) {
       const surroundings = [
