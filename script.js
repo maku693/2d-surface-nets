@@ -125,6 +125,18 @@ function drawOutlineCulled(ctx) {
   }
 }
 
+const surroundingPositions = [
+  [-1, -1],
+  [0, -1],
+  [1, -1],
+  [-1, 0],
+  [0, 0],
+  [1, 0],
+  [-1, 1],
+  [0, 1],
+  [1, 1]
+];
+
 function drawOutlineCulledSmooth(ctx) {
   ctx.strokeStyle = "red";
 
@@ -133,7 +145,7 @@ function drawOutlineCulledSmooth(ctx) {
   for (let y = 0; y < unitCount; y++) {
     for (let x = 0; x < unitCount; x++) {
       if (data[x][y] === 0) continue;
-      
+
       const isTop = y === 0;
       const isBottom = y === data.length - 1;
       const isLeft = x === 0;
@@ -149,9 +161,24 @@ function drawOutlineCulledSmooth(ctx) {
         !isBottom ? data[x][y - 1] : 0,
         !isRight && !isBottom ? data[x + 1][y - 1] : 0
       ];
-      
+      const surroundingsMass = surroundings.reduce((curr, prev) => curr + prev, 0);
+
+      const centerOfMass = [
+        (
+          -1 * surroundings[0] +
+          0 * surroundings[1] +
+          1 * surroundings[2] + 
+        ) / surroundingsMass,
+        (-1 * surroundings[0]) / surroundingsMass,
+      ];
+
       ctx.fillStyle = "red";
-      fillCircle(ctx, x * gridSize + gridSize / 2, y * gridSize + gridSize / 2, 10);
+      fillCircle(
+        ctx,
+        x * gridSize + gridSize / 2 + gridSize * centerOfMass[0],
+        y * gridSize + gridSize / 2 + gridSize * centerOfMass[1],
+        10
+      );
 
       if (y > 0 && data[x][y - 1] === 0) {
         ctx.moveTo(gridSize * data[x][y], gridSize * data[x][y]);
