@@ -31,6 +31,8 @@ const samples = grids + 1;
   const intersections = findIntersections(ctx, data);
 
   drawIntersectedGrids(ctx, intersections);
+  
+  // drawEdgeCrossings(ctx, intersections);
 
   drawSurface(ctx, data);
 })();
@@ -92,7 +94,7 @@ function findIntersections(ctx, data) {
 
 function drawIntersectedGrids(ctx, intersections) {
   for (let intersection of intersections) {
-    ctx.fillStyle = "#f008";
+    ctx.fillStyle = "#00f4";
     ctx.fillRect(
       intersection[0] * gridSize,
       intersection[1] * gridSize,
