@@ -157,20 +157,39 @@ function drawOutlineCulledSmooth(ctx) {
         !isLeft ? data[x - 1][y] : 0,
         data[x][y],
         !isRight ? data[x + 1][y] : 0,
-        !isLeft && !isBottom ? data[x - 1][y - 1] : 0,
-        !isBottom ? data[x][y - 1] : 0,
-        !isRight && !isBottom ? data[x + 1][y - 1] : 0
+        !isLeft && !isBottom ? data[x - 1][y + 1] : 0,
+        !isBottom ? data[x][y + 1] : 0,
+        !isRight && !isBottom ? data[x + 1][y + 1] : 0
       ];
-      const surroundingsMass = surroundings.reduce((curr, prev) => curr + prev, 0);
+      const surroundingsMass = surroundings.reduce(
+        (curr, prev) => curr + prev,
+        0
+      );
 
       const centerOfMass = [
-        (
-          -1 * surroundings[0] +
+        (-1 * surroundings[0] +
           0 * surroundings[1] +
-          1 * surroundings[2] + 
-        ) / surroundingsMass,
-        (-1 * surroundings[0]) / surroundingsMass,
+          1 * surroundings[2] +
+          -1 * surroundings[3] +
+          0 * surroundings[4] +
+          1 * surroundings[5] +
+          -1 * surroundings[6] +
+          0 * surroundings[7] +
+          1 * surroundings[8]) /
+          surroundingsMass,
+        (-1 * surroundings[0] +
+          -1 * surroundings[1] +
+          -1 * surroundings[2] +
+          0 * surroundings[3] +
+          0 * surroundings[4] +
+          0 * surroundings[5] +
+          1 * surroundings[6] +
+          1 * surroundings[7] +
+          1 * surroundings[8]) /
+          surroundingsMass
       ];
+
+      console.log(centerOfMass);
 
       ctx.fillStyle = "red";
       fillCircle(
@@ -180,24 +199,23 @@ function drawOutlineCulledSmooth(ctx) {
         10
       );
 
-      if (y > 0 && data[x][y - 1] === 0) {
-        ctx.moveTo(gridSize * data[x][y], gridSize * data[x][y]);
-        ctx.lineTo(gridSize, 0);
-      }
-      if (x < unitCount - 1 && data[x + 1][y] === 0) {
-        ctx.moveTo(gridSize, 0);
-        ctx.lineTo(gridSize, gridSize);
-      }
-      if (y < unitCount - 1 && data[x][y + 1] === 0) {
-        ctx.moveTo(gridSize, gridSize);
-        ctx.lineTo(0, gridSize);
-      }
-      if (x > 0 && data[x - 1][y] === 0) {
-        ctx.moveTo(0, gridSize);
-        ctx.lineTo(0, 0);
-      }
-
-      ctx.resetTransform();
+      // if (y > 0 && data[x][y - 1] === 0) {
+      //   ctx.moveTo(gridSize * data[x][y], gridSize * data[x][y]);
+      //   ctx.lineTo(gridSize, 0);
+      // }
+      // if (x < unitCount - 1 && data[x + 1][y] === 0) {
+      //   ctx.moveTo(gridSize, 0);
+      //   ctx.lineTo(gridSize, gridSize);
+      // }
+      // if (y < unitCount - 1 && data[x][y + 1] === 0) {
+      //   ctx.moveTo(gridSize, gridSize);
+      //   ctx.lineTo(0, gridSize);
+      // }
+      // if (x > 0 && data[x - 1][y] === 0) {
+      //   ctx.moveTo(0, gridSize);
+      //   ctx.lineTo(0, 0);
+      // }
+      // ctx.resetTransform();
     }
   }
   // ctx.closePath();
