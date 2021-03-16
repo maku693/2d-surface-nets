@@ -65,8 +65,6 @@ function drawData(ctx) {
   }
 }
 
-const surroundingSamples = [[0, 0], [1, 0], [0, 1], [1, 1]];
-
 function drawSurface(ctx) {
   for (let y = 0; y < grids; y++) {
     for (let x = 0; x < grids; x++) {
@@ -76,8 +74,6 @@ function drawSurface(ctx) {
         data[x][y + 1],
         data[x + 1][y + 1]
       ];
-
-      console.log(surroundings);
 
       if (!(surroundings.some(x => x === 0) && surroundings.some(x => 0 < x)))
         continue;
