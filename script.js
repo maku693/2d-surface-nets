@@ -133,6 +133,7 @@ function drawOutlineCulledSmooth(ctx) {
   for (let y = 0; y < unitCount; y++) {
     for (let x = 0; x < unitCount; x++) {
       if (data[x][y] === 0) continue;
+      
       const isTop = y === 0;
       const isBottom = y === data.length - 1;
       const isLeft = x === 0;
@@ -148,14 +149,9 @@ function drawOutlineCulledSmooth(ctx) {
         !isBottom ? data[x][y - 1] : 0,
         !isRight && !isBottom ? data[x + 1][y - 1] : 0
       ];
-      const vertices = [
-        { x: 0, y: 0 },
-        { x: 1, y: 0 },
-        { x: 0, y: 1 },
-        { x: 1, y: 1 },
-      ];
       
-      ctx.moveTo()
+      ctx.fillStyle = "red";
+      fillCircle(ctx, x * gridSize + gridSize / 2, y * gridSize + gridSize / 2, 10);
 
       if (y > 0 && data[x][y - 1] === 0) {
         ctx.moveTo(gridSize * data[x][y], gridSize * data[x][y]);
@@ -177,7 +173,14 @@ function drawOutlineCulledSmooth(ctx) {
       ctx.resetTransform();
     }
   }
-      ctx.closePath();
+  // ctx.closePath();
 
   // ctx.stroke();
+}
+
+function fillCircle(ctx, x, y, radius) {
+  ctx.beginPath();
+  ctx.arc(x, y, radius, 0, Math.PI * 2);
+  ctx.closePath();
+  ctx.fill();
 }
