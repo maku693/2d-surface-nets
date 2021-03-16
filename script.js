@@ -1,23 +1,19 @@
-const worldSize = 200;
+const worldSize = 240;
 const gridSize = 40;
 const grids = worldSize / gridSize;
 const samples = grids + 1;
 
 const data = Array.from({ length: samples }, () => new Array(samples).fill(0));
 
-// data[1][1] = 1;
-data[1][2] = 0.5;
-data[1][3] = 0.5;
-data[2][1] = 0.5;
-data[2][2] = 1;
+data[2][2] = 0.5;
 data[2][3] = 1;
-// data[2][4] = 0.5;
-// data[3][1] = 0.5;
+data[2][4] = 0.5;
 data[3][2] = 1;
 data[3][3] = 1;
-// data[3][4] = 0.5;
-// data[4][2] = 0.5;
-// data[4][3] = 0.5;
+data[3][4] = 1;
+data[4][2] = 1;
+data[4][3] = 1;
+data[4][4] = 1;
 
 (() => {
   const c = document.getElementById("c");
@@ -84,7 +80,7 @@ function drawSurface(ctx) {
         data[x + 1][y + 1]
       ];
 
-      if (!(surroundings.some(x => x < 1) && surroundings.some(x => 1 <= x)))
+      if (!(surroundings.some(x => x === 0) && surroundings.some(x => 0 < x)))
         continue;
 
       const surroundingsMass = surroundings.reduce(
