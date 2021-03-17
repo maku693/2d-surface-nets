@@ -68,8 +68,8 @@ function drawData(ctx, data) {
 }
 
 function drawCrossedEdges(ctx, data) {
-  ctx.fillStyle = "#0f08";
-  ctx.strokeStyle = "#0f04";
+  ctx.fillStyle = "#0808";
+  ctx.strokeStyle = "#0804";
   // vertical lines
   for (let y = 0; y < grids; y++) {
     for (let x = 0; x < samples; x++) {
@@ -84,7 +84,7 @@ function drawCrossedEdges(ctx, data) {
           x * gridSize,
           (y + 1) * gridSize
         );
-        fillCircle(ctx, x * gridSize, (y + 0.5) * gridSize, 5);
+        fillCircle(ctx, x * gridSize, (y + 0.5) * gridSize, 3);
       }
     }
   }
@@ -102,7 +102,7 @@ function drawCrossedEdges(ctx, data) {
           (x + 1) * gridSize,
           y * gridSize
         );
-        fillCircle(ctx, (x + 0.5) * gridSize, y * gridSize, 5);
+        fillCircle(ctx, (x + 0.5) * gridSize, y * gridSize, 3);
       }
     }
   }
@@ -129,40 +129,35 @@ function drawSurface(ctx, data) {
         2
       );
 
-      ctx.fillStyle = "magenta";
+      const crossings = [];
       const edges = [
         [[0, 0], [1, 0]],
         [[0, 0], [0, 1]],
         [[1, 0], [1, 1]],
         [[0, 1], [1, 1]]
       ];
-      const crossings = [];
       for (let edge of edges) {
         const [ex1, ey1] = [x + edge[0][0], y + edge[0][1]];
         const [ex2, ey2] = [x + edge[1][0], y + edge[1][1]];
         const a = data[ex1][ey1];
         const b = data[ex2][ey2];
         if ((a === 0 && 0 < b) || (0 < a && b === 0)) {
-          fillCircle(
-            ctx,
-            (ex1 + ex2) * 0.5 * gridSize,
-            (ey1 + ey2) * 0.5 * gridSize,
-            2
-          );
-          console.log(x, y);
+          crossings.push([(ex1 + ex2) * 0.5, (ey1 + ey2) * 0.5]);
+          // TODO: drawCrossedEdges
         }
       }
 
-      // ctx.lineWidth = 1;
-      // ctx.strokeStyle = "red";
-      // strokeCircle(
-      //   ctx,
-      //   x * gridSize + gridSize / 2 + (gridSize / 2) * centerOfMass[0],
-      //   y * gridSize + gridSize / 2 + (gridSize / 2) * centerOfMass[1],
-      //   4
-      // );
+      ctx.fillStyle = "#00f8";
+      fillCircle(
+        ctx,
+        (crossings[0][0] + crossings[1][0]) * 0.5 * gridSize,
+        (crossings[0][1] + crossings[1][1]) * 0.5 * gridSize,
+        3
+      );
     }
   }
+  
+  // TODO: stroke lines
 
   // ctx.beginPath();
   // ctx.closePath();
