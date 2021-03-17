@@ -28,11 +28,9 @@ const samples = grids + 1;
 
   drawData(ctx, data);
 
-  const intersections = findIntersections(ctx, data);
+  drawIntersectedGrids(ctx, data);
 
-  drawIntersectedGrids(ctx, intersections);
-
-  drawIntersectedEdges(ctx, data, intersections);
+  drawIntersectedEdges(ctx, data);
 
   drawSurface(ctx, data);
 })();
@@ -73,8 +71,7 @@ function drawData(ctx, data) {
   }
 }
 
-function findIntersections(ctx, data) {
-  const intersections = [];
+function drawIntersectedGrids(ctx, data) {
   for (let y = 0; y < grids; y++) {
     for (let x = 0; x < grids; x++) {
       const surroundings = [
@@ -85,52 +82,45 @@ function findIntersections(ctx, data) {
       ];
 
       if (surroundings.some(i => i === 0) && surroundings.some(i => 0 < i)) {
-        intersections.push([x, y]);
+        ctx.fillStyle = "#00f4";
+        ctx.fillRect(x * gridSize, y * gridSize, gridSize, gridSize);
       }
     }
   }
-  return intersections;
 }
 
-function drawIntersectedEdges(ctx, data, intersections) {
-  const edges = [
-    [[0, 0], [1, 0]],
-    [[0, 0], [0, 1]],
-    [[1, 0], [1, 1]],
-    [[0, 1], [1, 1]]
-  ];
-  for (let intersection of intersections) {
-    for (let edge of edges) {
-      const a = [intersection[0] + edge[0][0], intersection[1] + edge[0][1]];
-      const b = [intersection[0] + edge[1][0], intersection[1] + edge[1][1]];
-      let isIntersectedEdge = false;
+function drawIntersectedEdges(ctx, data) {
+  // vertical lines
+  for (let y = 0; y < grids; y++) {
+    for (let x = 0; x < samples; x++) {
       if (
-        (data[a[0]][a[1]] === 0 && 0 < data[b[0]][b[1]]) ||
-        (0 < data[a[0]][a[1]] && 0 === data[b[0]][b[1]])
+        (data[x][y] === 0 && 0 < data[x][y + 1]) ||
+        (0 < data[x][y] && 0 === data[x][y + 1])
       ) {
-        isIntersectedEdge = true;
-      }
-      if (isIntersectedEdge) {
         ctx.strokeStyle = "#0f04";
         ctx.beginPath();
-        ctx.moveTo(a[0] * gridSize, a[1] * gridSize);
-        ctx.lineTo(b[0] * gridSize, b[1] * gridSize);
+        ctx.moveTo(x * gridSize, y * gridSize);
+        ctx.lineTo(x * gridSize, (y + 1) * gridSize);
         ctx.closePath();
         ctx.stroke();
       }
     }
   }
-}
-
-function drawIntersectedGrids(ctx, intersections) {
-  for (let intersection of intersections) {
-    ctx.fillStyle = "#00f4";
-    ctx.fillRect(
-      intersection[0] * gridSize,
-      intersection[1] * gridSize,
-      gridSize,
-      gridSize
-    );
+  // horizontal lines
+  for (let y = 0; y < samples; y++) {
+    for (let x = 0; x < grids; x++) {
+      if (
+        (data[x][y] === 0 && 0 < data[x + 1][y]) ||
+        (0 < data[x][y] && 0 === data[x + 1][y])
+      ) {
+        ctx.strokeStyle = "#0f04";
+        ctx.beginPath();
+        ctx.moveTo(x * gridSize, y * gridSize);
+        ctx.lineTo((x + 1) * gridSize, y * gridSize);
+        ctx.closePath();
+        ctx.stroke();
+      }
+    }
   }
 }
 
