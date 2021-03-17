@@ -1,5 +1,5 @@
-const worldSize = 600;
-const gridSize = 100;
+const worldSize = 300;
+const gridSize = 50;
 const grids = worldSize / gridSize;
 const samples = grids + 1;
 
