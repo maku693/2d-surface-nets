@@ -92,6 +92,28 @@ function findIntersections(ctx, data) {
   return intersections;
 }
 
+const edges = [
+  [[0,0], [1, 0]],
+  [[0,0], [0, 1]],
+  [[1,0], [1, 1]],
+  [[0,1], [1, 1]],
+];
+
+function drawIntersectedEdges(ctx, intersections) {
+  for (let intersection of intersections) {
+    ctx.fillStyle = "#00f4";
+    ctx.fillRect(
+      intersection[0] * gridSize,
+      intersection[1] * gridSize,
+      gridSize,
+      gridSize
+    );
+    for (let edge of edges) {
+      data[intersection[0]]
+    }
+  }
+}
+
 function drawIntersectedGrids(ctx, intersections) {
   for (let intersection of intersections) {
     ctx.fillStyle = "#00f4";
