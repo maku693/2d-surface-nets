@@ -28,7 +28,7 @@ const samples = grids + 1;
 
   drawData(ctx, data);
 
-  drawIntersectedGrids(ctx, data);
+  // drawIntersectedGrids(ctx, data);
 
   drawIntersectedEdges(ctx, data);
 
@@ -36,10 +36,10 @@ const samples = grids + 1;
 })();
 
 function drawBackground(canvas, ctx) {
-  ctx.fillStyle = "white";
+  ctx.fillStyle = "#fff";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-  ctx.strokeStyle = "lightgray";
+  ctx.strokeStyle = "#0004";
   strokeGrid(ctx, gridSize);
 }
 
@@ -65,8 +65,8 @@ function drawData(ctx, data) {
   for (let y = 0; y < samples; y++) {
     for (let x = 0; x < samples; x++) {
       if (data[x][y] === 0) continue;
-      ctx.fillStyle = `rgba(255, 0, 0, ${data[x][y]})`;
-      fillCircle(ctx, x * gridSize, y * gridSize, 2);
+      ctx.fillStyle = "#f004";
+      fillCircle(ctx, x * gridSize, y * gridSize, gridSize / 2 * data[x][y]);
     }
   }
 }
@@ -90,6 +90,7 @@ function drawIntersectedGrids(ctx, data) {
 }
 
 function drawIntersectedEdges(ctx, data) {
+  ctx.strokeStyle = "#0f04";
   // vertical lines
   for (let y = 0; y < grids; y++) {
     for (let x = 0; x < samples; x++) {
@@ -97,12 +98,13 @@ function drawIntersectedEdges(ctx, data) {
         (data[x][y] === 0 && 0 < data[x][y + 1]) ||
         (0 < data[x][y] && 0 === data[x][y + 1])
       ) {
-        ctx.strokeStyle = "#0f04";
-        ctx.beginPath();
-        ctx.moveTo(x * gridSize, y * gridSize);
-        ctx.lineTo(x * gridSize, (y + 1) * gridSize);
-        ctx.closePath();
-        ctx.stroke();
+        strokeLine(
+          ctx,
+          x * gridSize,
+          y * gridSize,
+          x * gridSize,
+          (y + 1) * gridSize
+        );
       }
     }
   }
@@ -113,12 +115,13 @@ function drawIntersectedEdges(ctx, data) {
         (data[x][y] === 0 && 0 < data[x + 1][y]) ||
         (0 < data[x][y] && 0 === data[x + 1][y])
       ) {
-        ctx.strokeStyle = "#0f04";
-        ctx.beginPath();
-        ctx.moveTo(x * gridSize, y * gridSize);
-        ctx.lineTo((x + 1) * gridSize, y * gridSize);
-        ctx.closePath();
-        ctx.stroke();
+        strokeLine(
+          ctx,
+          x * gridSize,
+          y * gridSize,
+          (x + 1) * gridSize,
+          y * gridSize
+        );
       }
     }
   }
@@ -137,7 +140,7 @@ function drawSurface(ctx, data) {
       if (!(surroundings.some(x => x === 0) && surroundings.some(x => 0 < x)))
         continue;
 
-      ctx.fillStyle = "blue";
+      ctx.fillStyle = "#00f8";
       fillCircle(
         ctx,
         x * gridSize + gridSize / 2,
@@ -190,6 +193,14 @@ function fillCircle(ctx, x, y, radius) {
 function strokeCircle(ctx, x, y, radius) {
   ctx.beginPath();
   ctx.arc(x, y, radius, 0, Math.PI * 2);
+  ctx.closePath();
+  ctx.stroke();
+}
+
+function strokeLine(ctx, x1, y1, x2, y2) {
+  ctx.beginPath();
+  ctx.moveTo(x1, y1);
+  ctx.lineTo(x2, y2);
   ctx.closePath();
   ctx.stroke();
 }
