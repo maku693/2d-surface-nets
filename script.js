@@ -121,22 +121,6 @@ function drawSurface(ctx, data) {
       if (!(surroundings.some(x => x === 0) && surroundings.some(x => 0 < x)))
         continue;
 
-      const edges = [
-        [[0, 0], [1, 0]],
-        [[0, 0], [0, 1]],
-        [[1, 0], [1, 1]],
-        [[0, 1], [1, 1]]
-      ];
-      for (let edge of edges) {
-        const a = data[x + edge[0][0]][y + edge[0][1]];
-        const b = data[x + edge[1][0]][y + edge[1][1]];
-        console.log(a, b);
-        if ((a === 0 && 0 < b) || (0 < a && b === 0)) {
-          ctx.fillStyle = "magenta";
-          fillCircle(ctx, x * gridSize, y * gridSize, 2);
-        }
-      }
-
       ctx.fillStyle = "#00f4";
       fillCircle(
         ctx,
@@ -144,6 +128,30 @@ function drawSurface(ctx, data) {
         y * gridSize + gridSize / 2,
         2
       );
+
+      ctx.fillStyle = "magenta";
+      const edges = [
+        [[0, 0], [1, 0]],
+        [[0, 0], [0, 1]],
+        [[1, 0], [1, 1]],
+        [[0, 1], [1, 1]]
+      ];
+      const crossings = [];
+      for (let edge of edges) {
+        const [ex1, ey1] = [x + edge[0][0], y + edge[0][1]];
+        const [ex2, ey2] = [x + edge[1][0], y + edge[1][1]];
+        const a = data[ex1][ey1];
+        const b = data[ex2][ey2];
+        if ((a === 0 && 0 < b) || (0 < a && b === 0)) {
+          fillCircle(
+            ctx,
+            (ex1 + ex2) * 0.5 * gridSize,
+            (ey1 + ey2) * 0.5 * gridSize,
+            2
+          );
+          console.log(x, y);
+        }
+      }
 
       // ctx.lineWidth = 1;
       // ctx.strokeStyle = "red";
