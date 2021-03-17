@@ -121,8 +121,21 @@ function drawSurface(ctx, data) {
       if (!(surroundings.some(x => x === 0) && surroundings.some(x => 0 < x)))
         continue;
 
-      ctx.fillStyle = "magenta";
-      fillCircle(ctx, x * gridSize, (y + 0.5) * gridSize, 2);
+      const edges = [
+        [[0, 0], [1, 0]],
+        [[0, 0], [0, 1]],
+        [[1, 0], [1, 1]],
+        [[0, 1], [1, 1]]
+      ];
+      for (let edge of edges) {
+        const a = data[x + edge[0][0]][y + edge[0][1]];
+        const b = data[x + edge[1][0]][y + edge[1][1]];
+        console.log(a, b);
+        if ((a === 0 && 0 < b) || (0 < a && b === 0)) {
+          ctx.fillStyle = "magenta";
+          fillCircle(ctx, x * gridSize, y * gridSize, 2);
+        }
+      }
 
       ctx.fillStyle = "#00f4";
       fillCircle(
@@ -131,24 +144,6 @@ function drawSurface(ctx, data) {
         y * gridSize + gridSize / 2,
         2
       );
-
-      const surroundingsMass = surroundings.reduce(
-        (curr, prev) => curr + prev,
-        0
-      );
-
-      const centerOfMass = [
-        (-1 * surroundings[0] +
-          1 * surroundings[1] +
-          -1 * surroundings[2] +
-          1 * surroundings[3]) /
-          surroundingsMass,
-        (-1 * surroundings[0] +
-          -1 * surroundings[1] +
-          1 * surroundings[2] +
-          1 * surroundings[3]) /
-          surroundingsMass
-      ];
 
       // ctx.lineWidth = 1;
       // ctx.strokeStyle = "red";
