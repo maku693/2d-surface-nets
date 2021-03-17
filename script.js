@@ -99,17 +99,22 @@ const edges = [
   [[0,1], [1, 1]],
 ];
 
-function drawIntersectedEdges(ctx, intersections) {
+function drawIntersectedEdges(ctx, data, intersections) {
   for (let intersection of intersections) {
-    ctx.fillStyle = "#00f4";
-    ctx.fillRect(
-      intersection[0] * gridSize,
-      intersection[1] * gridSize,
-      gridSize,
-      gridSize
-    );
     for (let edge of edges) {
-      data[intersection[0]]
+      const a = [
+        intersection[0] + edge[0][0],
+        intersection[1] + edge[0][1],
+      ]
+      const b = [
+        intersection[0] + edge[0][0],
+        intersection[1] + edge[0][1],
+      ]
+      const isIntersectedEdge = [
+        [false, true],
+        [true, false],
+      ][data[a[0]][b[0]]][data[a[1]][b[1]]];
+      console.log(intersection, edge, )
     }
   }
 }
