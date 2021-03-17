@@ -1,22 +1,18 @@
-const worldSize = 240;
-const gridSize = 40;
+const worldSize = 600;
+const gridSize = 100;
 const grids = worldSize / gridSize;
 const samples = grids + 1;
 
 (() => {
   const c = document.getElementById("c");
-
-  c.width = worldSize;
-  c.height = worldSize;
-  
-  // c.style.width = c.width;
-  // c.style.height = c.height;
+  c.style.width = `${worldSize}px`;
+  c.style.height = `${worldSize}px`;
 
   const ctx = c.getContext("2d");
 
   const scale = window.devicePixelRatio;
-  c.width *= scale;
-  c.height *= scale;
+  c.width = worldSize * scale;
+  c.height = worldSize * scale;
   ctx.scale(scale, scale);
 
   ctx.lineWidth = 2;
@@ -79,24 +75,6 @@ function drawData(ctx, data) {
   }
 }
 
-function drawIntersectedGrids(ctx, data) {
-  for (let y = 0; y < grids; y++) {
-    for (let x = 0; x < grids; x++) {
-      const surroundings = [
-        data[x][y],
-        data[x + 1][y],
-        data[x][y + 1],
-        data[x + 1][y + 1]
-      ];
-
-      if (surroundings.some(i => i === 0) && surroundings.some(i => 0 < i)) {
-        ctx.fillStyle = "#00f4";
-        ctx.fillRect(x * gridSize, y * gridSize, gridSize, gridSize);
-      }
-    }
-  }
-}
-
 function drawCrossedEdges(ctx, data) {
   ctx.fillStyle = "#0f08";
   ctx.strokeStyle = "#0f04";
@@ -114,7 +92,7 @@ function drawCrossedEdges(ctx, data) {
           x * gridSize,
           (y + 1) * gridSize
         );
-        fillCircle(ctx, x * gridSize, (y + 0.5) * gridSize, 2);
+        fillCircle(ctx, x * gridSize, (y + 0.5) * gridSize, 5);
       }
     }
   }
@@ -132,7 +110,7 @@ function drawCrossedEdges(ctx, data) {
           (x + 1) * gridSize,
           y * gridSize
         );
-        fillCircle(ctx, (x + 0.5) * gridSize, y * gridSize, 2);
+        fillCircle(ctx, (x + 0.5) * gridSize, y * gridSize, 5);
       }
     }
   }
@@ -156,7 +134,7 @@ function drawSurface(ctx, data) {
         ctx,
         x * gridSize + gridSize / 2,
         y * gridSize + gridSize / 2,
-        2
+        5
       );
 
       const surroundingsMass = surroundings.reduce(
