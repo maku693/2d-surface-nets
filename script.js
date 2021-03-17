@@ -28,7 +28,7 @@ const samples = grids + 1;
   data[3][3] = 1;
   data[3][4] = 1;
   data[4][3] = 1;
-  data[4][4] = 1;
+  data[4][4] = 1; // 0.5;
 
   drawData(ctx, data);
 
@@ -44,24 +44,16 @@ function drawBackground(canvas, ctx) {
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
   ctx.strokeStyle = "#0004";
-  strokeGrid(ctx, gridSize);
-}
-
-function strokeGrid(ctx, gridSize) {
   ctx.beginPath();
-
   for (let i = 0; i <= ctx.canvas.width; i += gridSize) {
     ctx.moveTo(i, 0);
     ctx.lineTo(i, ctx.canvas.height);
   }
-
   for (let i = 0; i <= ctx.canvas.height; i += gridSize) {
     ctx.moveTo(0, i);
     ctx.lineTo(ctx.canvas.width, i);
   }
-
   ctx.closePath();
-
   ctx.stroke();
 }
 
@@ -129,12 +121,15 @@ function drawSurface(ctx, data) {
       if (!(surroundings.some(x => x === 0) && surroundings.some(x => 0 < x)))
         continue;
 
-      ctx.fillStyle = "#00f8";
+      ctx.fillStyle = "magenta";
+      fillCircle(ctx, x * gridSize, (y + 0.5) * gridSize, 2);
+
+      ctx.fillStyle = "#00f4";
       fillCircle(
         ctx,
         x * gridSize + gridSize / 2,
         y * gridSize + gridSize / 2,
-        5
+        2
       );
 
       const surroundingsMass = surroundings.reduce(
