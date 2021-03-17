@@ -32,7 +32,6 @@ const samples = grids + 1;
 
   drawIntersectedGrids(ctx, intersections);
 
-  // drawEdgeCrossings(ctx, intersections);
   drawIntersectedEdges(ctx, data, intersections);
 
   drawSurface(ctx, data);
@@ -106,16 +105,19 @@ function drawIntersectedEdges(ctx, data, intersections) {
       const b = [intersection[0] + edge[1][0], intersection[1] + edge[1][1]];
       let isIntersectedEdge = false;
       if (
-        (data[a[0]][b[0]] === 0 && 0 < data[a[1]][b[1]]) ||
-        (0 < data[a[0]][b[0]] && 0 === data[a[1]][b[1]])
+        (data[a[0]][a[1]] === 0 && 0 < data[b[0]][b[1]]) ||
+        (0 < data[a[0]][a[1]] && 0 === data[b[0]][b[1]])
       ) {
         isIntersectedEdge = true;
       }
-      ctx.strokeStyle = "green";
-      ctx.moveTo(a[0] * gridSize, a[1] * gridSize);
-      ctx.lineTo(b[0] * gridSize, b[1] * gridSize);
-      ctx.stroke();
-      console.log(intersection, edge, isIntersectedEdge);
+      if (isIntersectedEdge) {
+        ctx.strokeStyle = "#0f04";
+        ctx.beginPath();
+        ctx.moveTo(a[0] * gridSize, a[1] * gridSize);
+        ctx.lineTo(b[0] * gridSize, b[1] * gridSize);
+        ctx.closePath();
+        ctx.stroke();
+      }
     }
   }
 }
