@@ -8,8 +8,16 @@ const samples = grids + 1;
 
   c.width = worldSize;
   c.height = worldSize;
+  
+  // c.style.width = c.width;
+  // c.style.height = c.height;
 
   const ctx = c.getContext("2d");
+
+  const scale = window.devicePixelRatio;
+  c.width *= scale;
+  c.height *= scale;
+  ctx.scale(scale, scale);
 
   ctx.lineWidth = 2;
 
@@ -30,7 +38,7 @@ const samples = grids + 1;
 
   // drawIntersectedGrids(ctx, data);
 
-  drawIntersectedEdges(ctx, data);
+  drawCrossedEdges(ctx, data);
 
   drawSurface(ctx, data);
 })();
@@ -66,7 +74,7 @@ function drawData(ctx, data) {
     for (let x = 0; x < samples; x++) {
       if (data[x][y] === 0) continue;
       ctx.fillStyle = "#f004";
-      fillCircle(ctx, x * gridSize, y * gridSize, gridSize / 2 * data[x][y]);
+      fillCircle(ctx, x * gridSize, y * gridSize, (gridSize / 2) * data[x][y]);
     }
   }
 }
@@ -89,7 +97,8 @@ function drawIntersectedGrids(ctx, data) {
   }
 }
 
-function drawIntersectedEdges(ctx, data) {
+function drawCrossedEdges(ctx, data) {
+  ctx.fillStyle = "#0f08";
   ctx.strokeStyle = "#0f04";
   // vertical lines
   for (let y = 0; y < grids; y++) {
@@ -105,6 +114,7 @@ function drawIntersectedEdges(ctx, data) {
           x * gridSize,
           (y + 1) * gridSize
         );
+        fillCircle(ctx, x * gridSize, (y + 0.5) * gridSize, 2);
       }
     }
   }
@@ -122,6 +132,7 @@ function drawIntersectedEdges(ctx, data) {
           (x + 1) * gridSize,
           y * gridSize
         );
+        fillCircle(ctx, (x + 0.5) * gridSize, y * gridSize, 2);
       }
     }
   }
