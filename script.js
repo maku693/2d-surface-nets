@@ -137,13 +137,21 @@ function drawSurface(ctx, data) {
         [[0, 1], [1, 1]]
       ];
       for (let edge of edges) {
-        const [ex1, ey1] = [x + edge[0][0], y + edge[0][1]];
-        const [ex2, ey2] = [x + edge[1][0], y + edge[1][1]];
-        const a = data[ex1][ey1];
-        const b = data[ex2][ey2];
-        if ((a === 0 && 0 < b) || (0 < a && b === 0)) {
-          crossings.push([(ex1 + ex2) * 0.5, (ey1 + ey2) * 0.5]);
+        const [e1x, e1y] = [x + edge[0][0], y + edge[0][1]];
+        const [e2x, e2y] = [x + edge[1][0], y + edge[1][1]];
+        const e1 = data[e1x][e1y];
+        const e2 = data[e2x][e2y];
+        if ((e1 === 0 && 0 < e2) || (0 < e1 && e2 === 0)) {
           // TODO: drawCrossedEdges
+          ctx.fillStyle = "magenta";
+          fillCircle(ctx, e1x * gridSize, e1y * gridSize, 3);
+          fillCircle(ctx, e2x * gridSize, e2y * gridSize, 3);
+          const cx = (e1 * e1x + e2 * e2x) / (e1 + e2);
+          const cy = (e1 * e1y + e2 * e2y) / (e1 + e2);
+          ctx.fillStyle = "cyan";
+          fillCircle(ctx, cx * gridSize, cy * gridSize, 3);
+          // crossings.push([cx, cy]);
+          crossings.push([(e1x + e2x) * 0.5, (e1y + e2y) * 0.5]);
         }
       }
 
