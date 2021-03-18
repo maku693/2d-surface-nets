@@ -62,7 +62,7 @@ function drawData(ctx, data) {
   for (let y = 0; y < samples; y++) {
     for (let x = 0; x < samples; x++) {
       if (data[x][y] === 0) continue;
-      ctx.fillStyle = "#f004";
+      ctx.fillStyle = "#f008";
       fillCircle(ctx, x * gridSize, y * gridSize, (gridSize / 2) * data[x][y]);
     }
   }
@@ -122,12 +122,12 @@ function drawSurface(ctx, data) {
       if (!(surroundings.some(x => x === 0) && surroundings.some(x => 0 < x)))
         continue;
 
-      ctx.fillStyle = "#00f4";
-      fillCircle(
-        ctx,
-        x * gridSize + gridSize / 2,
-        y * gridSize + gridSize / 2,
-        2
+      ctx.fillStyle = "#0082";
+      ctx.fillRect(
+        x * gridSize,
+        y * gridSize,
+        gridSize,
+        gridSize
       );
 
       const crossings = [];
