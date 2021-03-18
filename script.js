@@ -121,8 +121,6 @@ function drawSurface(ctx, data) {
 
       if (!(surroundings.some(x => x === 0) && surroundings.some(x => 0 < x)))
         continue;
-      
-      if (!surroundings.)
 
       ctx.fillStyle = "#00f4";
       fillCircle(
@@ -148,6 +146,7 @@ function drawSurface(ctx, data) {
           ctx.fillStyle = "#0804";
           fillCircle(ctx, e1x * gridSize, e1y * gridSize, 2);
           fillCircle(ctx, e2x * gridSize, e2y * gridSize, 2);
+          ctx.fillStyle = "#0ff4";
           fillCircle(
             ctx,
             ((e1x + e2x) / 2) * gridSize,
@@ -162,13 +161,13 @@ function drawSurface(ctx, data) {
         }
       }
 
-      ctx.fillStyle = "#00f8";
-      fillCircle(
-        ctx,
-        (crossings[0][0] + crossings[1][0]) * 0.5 * gridSize,
-        (crossings[0][1] + crossings[1][1]) * 0.5 * gridSize,
-        3
-      );
+      // ctx.fillStyle = "#00f8";
+      // fillCircle(
+      //   ctx,
+      //   (crossings[0][0] + crossings[1][0]) * 0.5 * gridSize,
+      //   (crossings[0][1] + crossings[1][1]) * 0.5 * gridSize,
+      //   3
+      // );
     }
   }
 
