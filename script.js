@@ -28,7 +28,7 @@ const samples = grids + 1;
   data[3][3] = 1;
   data[3][4] = 1;
   data[4][3] = 1;
-  data[4][4] = 1; // 0.5;
+  data[4][4] = 1;
 
   drawData(ctx, data);
 
