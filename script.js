@@ -29,12 +29,13 @@ const samples = grids + 1;
   data[3][4] = 1;
   data[4][3] = 1;
   data[4][4] = 1;
+  data[5][5] = 1;
 
   drawData(ctx, data);
 
   // drawIntersectedGrids(ctx, data);
 
-  drawCrossedEdges(ctx, data);
+  // drawCrossedEdges(ctx, data);
 
   drawSurface(ctx, data);
 })();
@@ -120,6 +121,8 @@ function drawSurface(ctx, data) {
 
       if (!(surroundings.some(x => x === 0) && surroundings.some(x => 0 < x)))
         continue;
+      
+      if (!surroundings.)
 
       ctx.fillStyle = "#00f4";
       fillCircle(
@@ -142,16 +145,20 @@ function drawSurface(ctx, data) {
         const e1 = data[e1x][e1y];
         const e2 = data[e2x][e2y];
         if ((e1 === 0 && 0 < e2) || (0 < e1 && e2 === 0)) {
-          // TODO: drawCrossedEdges
-          ctx.fillStyle = "magenta";
-          fillCircle(ctx, e1x * gridSize, e1y * gridSize, 3);
-          fillCircle(ctx, e2x * gridSize, e2y * gridSize, 3);
-          const cx = (e1 * e1x + e2 * e2x) / (e1 + e2);
-          const cy = (e1 * e1y + e2 * e2y) / (e1 + e2);
-          ctx.fillStyle = "cyan";
-          fillCircle(ctx, cx * gridSize, cy * gridSize, 3);
+          ctx.fillStyle = "#0804";
+          fillCircle(ctx, e1x * gridSize, e1y * gridSize, 2);
+          fillCircle(ctx, e2x * gridSize, e2y * gridSize, 2);
+          fillCircle(
+            ctx,
+            ((e1x + e2x) / 2) * gridSize,
+            ((e1y + e2y) / 2) * gridSize,
+            3
+          );
+          // const cx = (e1 * e1x + e2 * e2x) / (e1 + e2);
+          // const cy = (e1 * e1y + e2 * e2y) / (e1 + e2);
+          // fillCircle(ctx, cx * gridSize, cy * gridSize, 3);
           // crossings.push([cx, cy]);
-          crossings.push([(e1x + e2x) * 0.5, (e1y + e2y) * 0.5]);
+          crossings.push([(e1x + e2x) / 2, (e1y + e2y) / 2]);
         }
       }
 
@@ -164,7 +171,7 @@ function drawSurface(ctx, data) {
       );
     }
   }
-  
+
   // TODO: stroke lines
 
   // ctx.beginPath();
