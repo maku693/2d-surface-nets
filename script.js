@@ -33,10 +33,6 @@ const samples = grids + 1;
 
   drawData(ctx, data);
 
-  // drawIntersectedGrids(ctx, data);
-
-  // drawCrossedEdges(ctx, data);
-
   drawSurface(ctx, data);
 })();
 
@@ -64,47 +60,6 @@ function drawData(ctx, data) {
       if (data[x][y] === 0) continue;
       ctx.fillStyle = "#f008";
       fillCircle(ctx, x * gridSize, y * gridSize, (gridSize / 2) * data[x][y]);
-    }
-  }
-}
-
-function drawCrossedEdges(ctx, data) {
-  ctx.fillStyle = "#0808";
-  ctx.strokeStyle = "#0804";
-  // vertical lines
-  for (let y = 0; y < grids; y++) {
-    for (let x = 0; x < samples; x++) {
-      if (
-        (data[x][y] === 0 && 0 < data[x][y + 1]) ||
-        (0 < data[x][y] && 0 === data[x][y + 1])
-      ) {
-        strokeLine(
-          ctx,
-          x * gridSize,
-          y * gridSize,
-          x * gridSize,
-          (y + 1) * gridSize
-        );
-        fillCircle(ctx, x * gridSize, (y + 0.5) * gridSize, 3);
-      }
-    }
-  }
-  // horizontal lines
-  for (let y = 0; y < samples; y++) {
-    for (let x = 0; x < grids; x++) {
-      if (
-        (data[x][y] === 0 && 0 < data[x + 1][y]) ||
-        (0 < data[x][y] && 0 === data[x + 1][y])
-      ) {
-        strokeLine(
-          ctx,
-          x * gridSize,
-          y * gridSize,
-          (x + 1) * gridSize,
-          y * gridSize
-        );
-        fillCircle(ctx, (x + 0.5) * gridSize, y * gridSize, 3);
-      }
     }
   }
 }
