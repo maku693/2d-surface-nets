@@ -63,76 +63,6 @@ function drawData(ctx, data) {
   }
 }
 
-function getCrossings(ctx, data) {
-  for (let y = 0; y < grids; y++) {
-    for (let x = 0; x < grids; x++) {
-      const surroundings = [
-        data[x][y],
-        data[x + 1][y],
-        data[x][y + 1],
-        data[x + 1][y + 1]
-      ];
-
-      if (!(surroundings.some(x => x === 0) && surroundings.some(x => 0 < x)))
-        continue;
-
-      ctx.fillStyle = "#0082";
-      ctx.fillRect(
-        x * gridSize,
-        y * gridSize,
-        gridSize,
-        gridSize
-      );
-
-      const crossings = [];
-      const edges = [
-        [[0, 0], [1, 0]],
-        [[0, 0], [0, 1]],
-        [[1, 0], [1, 1]],
-        [[0, 1], [1, 1]]
-      ];
-      for (let edge of edges) {
-        const [e1x, e1y] = [x + edge[0][0], y + edge[0][1]];
-        const [e2x, e2y] = [x + edge[1][0], y + edge[1][1]];
-        const e1 = data[e1x][e1y];
-        const e2 = data[e2x][e2y];
-        if ((e1 === 0 && 0 < e2) || (0 < e1 && e2 === 0)) {
-          ctx.fillStyle = "#0804";
-          fillCircle(ctx, e1x * gridSize, e1y * gridSize, 2);
-          fillCircle(ctx, e2x * gridSize, e2y * gridSize, 2);
-          ctx.fillStyle = "#0ff4";
-          fillCircle(
-            ctx,
-            ((e1x + e2x) / 2) * gridSize,
-            ((e1y + e2y) / 2) * gridSize,
-            3
-          );
-          // const cx = (e1 * e1x + e2 * e2x) / (e1 + e2);
-          // const cy = (e1 * e1y + e2 * e2y) / (e1 + e2);
-          // fillCircle(ctx, cx * gridSize, cy * gridSize, 3);
-          // crossings.push([cx, cy]);
-          crossings.push([(e1x + e2x) / 2, (e1y + e2y) / 2]);
-        }
-      }
-
-      // ctx.fillStyle = "#00f8";
-      // fillCircle(
-      //   ctx,
-      //   (crossings[0][0] + crossings[1][0]) * 0.5 * gridSize,
-      //   (crossings[0][1] + crossings[1][1]) * 0.5 * gridSize,
-      //   3
-      // );
-    }
-  }
-
-  // TODO: stroke lines
-
-  // ctx.beginPath();
-  // ctx.closePath();
-
-  // ctx.stroke();
-}
-
 function drawSurface(ctx, data) {
   for (let y = 0; y < grids; y++) {
     for (let x = 0; x < grids; x++) {
@@ -147,12 +77,7 @@ function drawSurface(ctx, data) {
         continue;
 
       ctx.fillStyle = "#0082";
-      ctx.fillRect(
-        x * gridSize,
-        y * gridSize,
-        gridSize,
-        gridSize
-      );
+      ctx.fillRect(x * gridSize, y * gridSize, gridSize, gridSize);
 
       const crossings = [];
       const edges = [
