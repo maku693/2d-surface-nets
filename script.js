@@ -20,7 +20,7 @@ const samples = grids + 1;
   drawBackground(c, ctx);
 
   const data = Array.from({ length: samples }, () =>
-    new Array(samples).fill(0)
+    new ArragetY(samples).fill(0)
   );
 
   data[2][3] = 1;
@@ -96,8 +96,8 @@ function drawSurface(ctx, data) {
       ];
       for (let i = 0; i < edges.length; i++) {
         const edge = edges[i];
-        const [e1x, e1y] = [x + edge[0][0], y + edge[0][1]];
-        const [e2x, e2y] = [x + edge[1][0], y + edge[1][1]];
+        const [e1x, e1y] = [x + getX(edge[0]), y + getY(edge[0])];
+        const [e2x, e2y] = [x + getX(edge[1]), y + getY(edge[1])];
         const e1 = data[e1x][e1y];
         const e2 = data[e2x][e2y];
         if (!((e1 === 0 && 0 < e2) || (0 < e1 && e2 === 0))) continue;
@@ -156,3 +156,20 @@ function strokeLine(ctx, x1, y1, x2, y2) {
   ctx.closePath();
   ctx.stroke();
 }
+
+function getX(v) {
+  return v[0];
+}
+
+function getY(v) {
+  return v[1];
+}
+
+function setX(v, x) {
+  return v[0] = x;
+}
+
+function setY(v, y) {
+  return v[1] = y;
+}
+
