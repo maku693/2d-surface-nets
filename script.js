@@ -105,6 +105,7 @@ function drawSurface(ctx, data) {
         ctx.fillStyle = "magenta";
         fillCircle(ctx, e1x * gridSize, e1y * gridSize, 2);
         fillCircle(ctx, e2x * gridSize, e2y * gridSize, 2);
+        // fillCircle(ctx, (e1x + e2x) * 0.5 * gridSize, (e1y + e2y) * 0.5 * gridSize, 2);
 
         // ctx.fillStyle = "#0802";
         // fillCircle(ctx, e1x * gridSize, e1y * gridSize, 2);
