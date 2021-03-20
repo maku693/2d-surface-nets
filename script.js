@@ -122,6 +122,7 @@ function drawSurface(ctx, data) {
       fillCircle(ctx, vertex[0] * gridSize, vertex[1] * gridSize, 3);
 
       vertices.push(vertex);
+      lines.push();
     }
   }
 
