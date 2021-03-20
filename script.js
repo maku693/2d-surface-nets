@@ -76,8 +76,10 @@ function drawSurface(ctx, data) {
       if (!(surroundings.some(x => x === 0) && surroundings.some(x => 0 < x)))
         continue;
 
-      ctx.fillStyle = "#0082";
+      ctx.fillStyle = "#00f2";
       ctx.fillRect(x * gridSize, y * gridSize, gridSize, gridSize);
+      ctx.fillStyle = "#00f4";
+      fillCircle(ctx, (x + 0.5) * gridSize, (y + 0.5) * gridSize, 2);
 
       const crossings = [];
       const edges = [
@@ -92,31 +94,27 @@ function drawSurface(ctx, data) {
         const e1 = data[e1x][e1y];
         const e2 = data[e2x][e2y];
         if ((e1 === 0 && 0 < e2) || (0 < e1 && e2 === 0)) {
-          ctx.fillStyle = "#0804";
+          ctx.fillStyle = "#0802";
           fillCircle(ctx, e1x * gridSize, e1y * gridSize, 2);
           fillCircle(ctx, e2x * gridSize, e2y * gridSize, 2);
-          ctx.fillStyle = "#0ff4";
+          ctx.fillStyle = "#0804";
           fillCircle(
             ctx,
-            ((e1x + e2x) / 2) * gridSize,
-            ((e1y + e2y) / 2) * gridSize,
+            ((e1x + e2x) * 0.5) * gridSize,
+            ((e1y + e2y) * 0.5) * gridSize,
             3
           );
-          // const cx = (e1 * e1x + e2 * e2x) / (e1 + e2);
-          // const cy = (e1 * e1y + e2 * e2y) / (e1 + e2);
-          // fillCircle(ctx, cx * gridSize, cy * gridSize, 3);
-          // crossings.push([cx, cy]);
           crossings.push([(e1x + e2x) / 2, (e1y + e2y) / 2]);
         }
       }
 
-      // ctx.fillStyle = "#00f8";
-      // fillCircle(
-      //   ctx,
-      //   (crossings[0][0] + crossings[1][0]) * 0.5 * gridSize,
-      //   (crossings[0][1] + crossings[1][1]) * 0.5 * gridSize,
-      //   3
-      // );
+      ctx.fillStyle = "#00f8";
+      fillCircle(
+        ctx,
+        (crossings[0][0] + crossings[1][0]) * 0.5 * gridSize,
+        (crossings[0][1] + crossings[1][1]) * 0.5 * gridSize,
+        3
+      );
     }
   }
 
