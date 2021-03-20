@@ -20,7 +20,7 @@ const samples = grids + 1;
   drawBackground(c, ctx);
 
   const data = Array.from({ length: samples }, () =>
-    new ArragetY(samples).fill(0)
+    new Array(samples).fill(0)
   );
 
   data[2][3] = 1;
@@ -101,11 +101,16 @@ function drawSurface(ctx, data) {
         const e1 = data[e1x][e1y];
         const e2 = data[e2x][e2y];
         if (!((e1 === 0 && 0 < e2) || (0 < e1 && e2 === 0))) continue;
-        
-        ctx.fillStyle = "magenta";
+
+        ctx.fillStyle = "#0802";
         fillCircle(ctx, e1x * gridSize, e1y * gridSize, 2);
         fillCircle(ctx, e2x * gridSize, e2y * gridSize, 2);
-        // fillCircle(ctx, (e1x + e2x) * 0.5 * gridSize, (e1y + e2y) * 0.5 * gridSize, 2);
+        fillCircle(
+          ctx,
+          (e1x + e2x) * 0.5 * gridSize,
+          (e1y + e2y) * 0.5 * gridSize,
+          2
+        );
 
         // ctx.fillStyle = "#0802";
         // fillCircle(ctx, e1x * gridSize, e1y * gridSize, 2);
@@ -166,10 +171,9 @@ function getY(v) {
 }
 
 function setX(v, x) {
-  return v[0] = x;
+  return (v[0] = x);
 }
 
 function setY(v, y) {
-  return v[1] = y;
+  return (v[1] = y);
 }
-
