@@ -31,6 +31,9 @@ const samples = grids + 1;
   data[4][4] = 1;
 
   drawData(ctx, data);
+  
+  // const vertices = getVertices(data);
+  // drawLines(vertices);
 
   drawSurface(ctx, data);
 })();
