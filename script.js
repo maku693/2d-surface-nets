@@ -68,6 +68,7 @@ function drawData(ctx, data) {
 
 function drawSurface(ctx, data) {
   const vertices = [];
+  const lines = [];
   for (let y = 0; y < grids; y++) {
     for (let x = 0; x < grids; x++) {
       const surroundings = [
@@ -122,7 +123,7 @@ function drawSurface(ctx, data) {
       fillCircle(ctx, vertex[0] * gridSize, vertex[1] * gridSize, 3);
 
       vertices.push(vertex);
-      lines.push();
+      lines.push([]);
     }
   }
 
