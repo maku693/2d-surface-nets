@@ -101,23 +101,16 @@ function drawSurface(ctx, data) {
         const e1 = data[e1x][e1y];
         const e2 = data[e2x][e2y];
         if (!((e1 === 0 && 0 < e2) || (0 < e1 && e2 === 0))) continue;
-
-        ctx.fillStyle = "#0802";
-        fillCircle(ctx, e1x * gridSize, e1y * gridSize, 2);
         
-        crossings2.push([e1x, e1y], [e2x, e2y]);
+        ctx.fillStyle = "magenta";
+        fillCircle(ctx, e1x * gridSize, e1y * gridSize, 2);
+        fillCircle(ctx, e2x * gridSize, e2y * gridSize, 2);
+
+        // ctx.fillStyle = "#0802";
+        // fillCircle(ctx, e1x * gridSize, e1y * gridSize, 2);
 
         crossings.push([(e1x + e2x) / 2, (e1y + e2y) / 2]);
       }
-      
-      console.log(crossings2);
-      const vertex2a = [
-        (crossings2[0][0] + crossings2[0][1]) * 0.5,
-        (crossings2[1][0] + crossings2[1][1]) * 0.5,
-      ];
-      
-      ctx.fillStyle = "magenta";
-      fillCircle(ctx, vertex2a[0] * gridSize, vertex2a[1] * gridSize, 10);
 
       const vertex = [
         (crossings[0][0] + crossings[1][0]) * 0.5,
