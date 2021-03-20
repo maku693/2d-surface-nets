@@ -95,6 +95,7 @@ function drawSurface(ctx, data) {
         const e1 = data[e1x][e1y];
         const e2 = data[e2x][e2y];
         if ((e1 === 0 && 0 < e2) || (0 < e1 && e2 === 0)) {
+          
           ctx.fillStyle = "#0802";
           fillCircle(ctx, e1x * gridSize, e1y * gridSize, 2);
           fillCircle(ctx, e2x * gridSize, e2y * gridSize, 2);
@@ -105,6 +106,7 @@ function drawSurface(ctx, data) {
             (e1y + e2y) * 0.5 * gridSize,
             3
           );
+          
           crossings.push([(e1x + e2x) / 2, (e1y + e2y) / 2]);
         }
       }
@@ -116,6 +118,7 @@ function drawSurface(ctx, data) {
 
       ctx.fillStyle = "#00f8";
       fillCircle(ctx, vertex[0] * gridSize, vertex[1] * gridSize, 3);
+      
       vertices.push(crossings);
     }
   }
