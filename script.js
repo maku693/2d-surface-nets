@@ -64,6 +64,7 @@ function drawData(ctx, data) {
 }
 
 function drawSurface(ctx, data) {
+  const vertices = [];
   for (let y = 0; y < grids; y++) {
     for (let x = 0; x < grids; x++) {
       const surroundings = [
@@ -100,21 +101,22 @@ function drawSurface(ctx, data) {
           ctx.fillStyle = "#0804";
           fillCircle(
             ctx,
-            ((e1x + e2x) * 0.5) * gridSize,
-            ((e1y + e2y) * 0.5) * gridSize,
+            (e1x + e2x) * 0.5 * gridSize,
+            (e1y + e2y) * 0.5 * gridSize,
             3
           );
           crossings.push([(e1x + e2x) / 2, (e1y + e2y) / 2]);
         }
       }
 
+      const vertex = [
+        (crossings[0][0] + crossings[1][0]) * 0.5,
+        (crossings[0][1] + crossings[1][1]) * 0.5
+      ];
+
       ctx.fillStyle = "#00f8";
-      fillCircle(
-        ctx,
-        (crossings[0][0] + crossings[1][0]) * 0.5 * gridSize,
-        (crossings[0][1] + crossings[1][1]) * 0.5 * gridSize,
-        3
-      );
+      fillCircle(ctx, vertex[0] * gridSize, vertex[1] * gridSize, 3);
+      vertices.push(crossings);
     }
   }
 
