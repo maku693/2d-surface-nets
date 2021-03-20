@@ -121,7 +121,7 @@ function drawSurface(ctx, data) {
       ctx.fillStyle = "#00f8";
       fillCircle(ctx, vertex[0] * gridSize, vertex[1] * gridSize, 3);
 
-      vertices.push(crossings);
+      vertices.push(vertex);
     }
   }
 
