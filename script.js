@@ -86,6 +86,7 @@ function drawSurface(ctx, data) {
       ctx.fillStyle = "#00f4";
       fillCircle(ctx, (x + 0.5) * gridSize, (y + 0.5) * gridSize, 2);
 
+      const crossings2 = [];
       const crossings = [];
       const edges = [
         [[0, 0], [1, 0]],
@@ -93,26 +94,26 @@ function drawSurface(ctx, data) {
         [[1, 0], [1, 1]],
         [[0, 1], [1, 1]]
       ];
-      for (let edge of edges) {
+      for (let i = 0; i < edges.length; i++) {
+        const edge = edges[i];
         const [e1x, e1y] = [x + edge[0][0], y + edge[0][1]];
         const [e2x, e2y] = [x + edge[1][0], y + edge[1][1]];
         const e1 = data[e1x][e1y];
         const e2 = data[e2x][e2y];
-        if ((e1 === 0 && 0 < e2) || (0 < e1 && e2 === 0)) {
-          ctx.fillStyle = "#0802";
-          fillCircle(ctx, e1x * gridSize, e1y * gridSize, 2);
-          fillCircle(ctx, e2x * gridSize, e2y * gridSize, 2);
-          ctx.fillStyle = "#0804";
-          fillCircle(
-            ctx,
-            (e1x + e2x) * 0.5 * gridSize,
-            (e1y + e2y) * 0.5 * gridSize,
-            3
-          );
+        if (!((e1 === 0 && 0 < e2) || (0 < e1 && e2 === 0))) continue;
 
-          crossings.push([(e1x + e2x) / 2, (e1y + e2y) / 2]);
-        }
+        ctx.fillStyle = "#0802";
+        fillCircle(ctx, e1x * gridSize, e1y * gridSize, 2);
+        fillCircle(ctx, e2x * gridSize, e2y * gridSize, 2);
+        
+        crossings2.push(i);
+
+        crossings.push([(e1x + e2x) / 2, (e1y + e2y) / 2]);
       }
+      
+      const vertex2 = [
+        data[x + edges[crossings2[0]][0]]
+      ];
 
       const vertex = [
         (crossings[0][0] + crossings[1][0]) * 0.5,
@@ -123,7 +124,7 @@ function drawSurface(ctx, data) {
       fillCircle(ctx, vertex[0] * gridSize, vertex[1] * gridSize, 3);
 
       vertices.push(vertex);
-      
+
       lines.push([]);
     }
   }
