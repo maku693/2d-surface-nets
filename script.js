@@ -132,8 +132,10 @@ function drawData2(ctx, data) {
 }
 
 function drawSurface2(ctx, data) {
+  // セルごとにイテレートする
   for (let y = 0; y < data.height - 1; y++) {
     for (let x = 0; x < data.width - 1; x++) {
+      // 対象のセルを洗い出す。
       let corners = 0b0000;
       for (let j = 0; j < 2; j++) {
         for (let i = 0; i < 2; i++) {
@@ -141,11 +143,13 @@ function drawSurface2(ctx, data) {
           corners = corners || 0 < p ? 1 << (j * 2 + i) : 0;
         }
       }
+      // 現在のセルを構成する4点のうち、すべてが0またはすべてが0ではないセルは除外する。
       if (corners === 0b0000 || corners === 0b1111) continue;
 
+      // セルの頂点の位置を決定する。セルの枠と関数の交点の平均の頂点の位置である。
       for (let i = 0; i < 4; i++) {
+        // セルの枠と関数の交点を取得する
         const p = data.get(x + (i % 2), y + Math.floor(i / 2));
-        p = 
       }
     }
   }
