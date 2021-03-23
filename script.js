@@ -144,7 +144,7 @@ function drawSurface2(ctx, data) {
       if (corners === 0b0000 || corners === 0b1111) continue;
 
       for (let i = 0; i < 4; i++) {
-        data.get();
+        data.get(Math.floor(x / 2), y % 2);
       }
     }
   }
