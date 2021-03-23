@@ -41,6 +41,11 @@ function main() {
 
   // drawData(ctx, data);
 
+  // const vertices = getVertices(data);
+  // drawLines(vertices);
+
+  // drawSurface(ctx, data);
+
   const data2 = new Data(samples, samples);
   data2.set(2, 3, 1);
   data2.set(3, 2, 1);
@@ -48,12 +53,8 @@ function main() {
   data2.set(3, 4, 1);
   data2.set(4, 3, 1);
   data2.set(4, 4, 1);
+  
   drawData2(ctx, data2);
-
-  // const vertices = getVertices(data);
-  // drawLines(vertices);
-
-  drawSurface(ctx, data);
 }
 
 function drawData(ctx, data) {
