@@ -1,12 +1,3 @@
-// [0, 1, 0, 2, 1, 3, 2, 3];
-// prettier-ignore
-const squareEdges = [
-  [[0, 0], [1, 0]],
-  [[0, 0], [0, 1]],
-  [[1, 0], [1, 1]],
-  [[0, 1], [1, 1]],
-];
-
 const worldSize = 300;
 const grids = 6;
 const samples = grids + 1;
@@ -146,14 +137,28 @@ function drawSurface2(ctx, data) {
       // 現在のセルを構成する4点のうち、すべてが0またはすべてが0ではないセルは除外する。
       if (corners === 0b0000 || corners === 0b1111) continue;
 
-      // セルの頂点の位置を決定する。セルの枠と関数の交点の平均の頂点の位置である。
+      // セルの頂点の位置を決定する。セルの枠と関数の交点の平均が頂点の位置である。
+      let edgeCount = 0;
       for (let i = 0; i < 4; i++) {
-        // セルの枠と関数の交点を取得する
-        const p = data.get(x + (i % 2), y + Math.floor(i / 2));
+        // セルの枠と関数の交点を取得する。
+        const [a, b] = squareEdges[i];
+        const pa = data.get(x + a[x], y + a[y]);
+        const pb = data.get(x + b[x], y + b[y]);
+        if (pa === 0 && pb === 0) continue;
+        edgeCount++;
       }
     }
   }
 }
+
+// [0, 1, 0, 2, 1, 3, 2, 3];
+// prettier-ignore
+const squareEdges = [
+  [[0, 0], [1, 0]],
+  [[0, 0], [0, 1]],
+  [[1, 0], [1, 1]],
+  [[0, 1], [1, 1]],
+];
 
 main();
 
