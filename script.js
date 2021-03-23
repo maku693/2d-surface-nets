@@ -35,7 +35,7 @@ function main() {
   data2.set(3, 4, 1);
   data2.set(4, 3, 1);
   data2.set(4, 4, 1);
-  
+
   drawData2(ctx, data2);
   drawSurface2(ctx, data2);
 }
@@ -144,7 +144,8 @@ function drawSurface2(ctx, data) {
       if (corners === 0b0000 || corners === 0b1111) continue;
 
       for (let i = 0; i < 4; i++) {
-        data.get(Math.floor(x / 2), y % 2);
+        const p = data.get(x + (i % 2), y + Math.floor(i / 2));
+        p = 
       }
     }
   }
