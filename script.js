@@ -141,12 +141,12 @@ function drawSurface2(ctx, data) {
       let edgeCount = 0;
       for (let i = 0; i < 4; i++) {
         // セルの枠と関数の交点を取得する。
-        console.log([
+        console.log({
           x,
           y,
-          corners.toString(2).padStart(4, 0),
-          (1 << i).toString(2).padStart(4, 0)
-        ]);
+          "mask (corners)": corners.toString(2).padStart(4, 0),
+          "crossed": (1 << i).toString(2).padStart(4, 0)
+      });
       }
     }
   }
