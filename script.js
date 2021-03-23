@@ -131,7 +131,7 @@ function drawSurface2(ctx, data) {
       for (let j = 0; j < 2; j++) {
         for (let i = 0; i < 2; i++) {
           const p = data.get(x + i, y + j);
-          corners = corners || 0 < p ? 1 << (j * 2 + i) : 0;
+          corners |= 0 < p ? 1 << (j * 2 + i) : 0;
         }
       }
       // 現在のセルを構成する4点のうち、すべてが0またはすべてが0ではないセルは除外する。
@@ -141,11 +141,12 @@ function drawSurface2(ctx, data) {
       let edgeCount = 0;
       for (let i = 0; i < 4; i++) {
         // セルの枠と関数の交点を取得する。
-        const [a, b] = squareEdges[i];
-        const pa = data.get(x + a[x], y + a[y]);
-        const pb = data.get(x + b[x], y + b[y]);
-        if (pa === 0 && pb === 0) continue;
-        edgeCount++;
+        console.log([
+          x,
+          y,
+          corners.toString(2).padStart(4, 0),
+          (1 << i).toString(2).padStart(4, 0)
+        ]);
       }
     }
   }
