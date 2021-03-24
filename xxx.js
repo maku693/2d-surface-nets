@@ -13,7 +13,14 @@ var edge_table = [
   undefined // ...
 ];
 
-var edge_table = new Uint8Array(Math.pow(2))
+var edge_table = new Uint8Array(Math.pow(2, 4));
+for (var i = 0; i < edge_table.length; i++) {
+  var edge_mask = 0;
+  for (var j = 0; j < 24; j++) {
+    var a = i & (1 << square_edges[j]);
+    edge_table[i] = edge_mask;
+  }
+}
 
 var edge_mask = edge_table[mask]; // 0b1010
 
