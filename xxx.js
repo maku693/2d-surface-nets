@@ -9,9 +9,11 @@ var edge_table = [
   0b1111, // i: 0b0101
   0b1101, // i: 0b0110
   0b1111, // i: 0b0111
-  0b1010 // i: 0b1000
-  // ...
+  0b1010, // i: 0b1000
+  undefined // ...
 ];
+
+var edge_table = new Uint8Array(Math.pow(2))
 
 var edge_mask = edge_table[mask]; // 0b1010
 
