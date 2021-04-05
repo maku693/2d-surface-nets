@@ -1,5 +1,5 @@
 const worldSize = 300;
-const samplePoints = 6;
+const samplePoints = 5;
 const grids = samplePoints - 1;
 const gridSize = worldSize / grids;
 
@@ -28,12 +28,12 @@ const data = new Uint8Array(grids * grids);
 function data_set(x, y, value) {
   data[y * grids + x] = value;
 }
+data_set(1, 0, 1);
+data_set(0, 1, 1);
+data_set(1, 1, 1);
 data_set(2, 1, 1);
 data_set(1, 2, 1);
 data_set(2, 2, 1);
-data_set(3, 2, 1);
-data_set(2, 3, 1);
-data_set(3, 3, 1);
 
 const c = document.getElementById("c");
 c.style.width = `${worldSize}px`;
