@@ -61,10 +61,10 @@ for (let i = 0; i <= ctx.canvas.height; i += gridSize) {
   ctx.moveTo(0, i);
   ctx.lineTo(ctx.canvas.width, i);
 }
-ctx.closePath();
 ctx.strokeStyle = "#0002";
 ctx.stroke();
 
+ctx.setLineDash([5, 5]);
 ctx.beginPath();
 for (let i = gridSize / 2; i <= ctx.canvas.width; i += gridSize) {
   ctx.moveTo(i, 0);
@@ -74,10 +74,7 @@ for (let i = gridSize / 2; i <= ctx.canvas.height; i += gridSize) {
   ctx.moveTo(0, i);
   ctx.lineTo(ctx.canvas.width, i);
 }
-ctx.closePath();
-ctx.setLineDash([5, 5]);
 ctx.stroke();
-ctx.setLineDash([]);
 
 for (let i = 0; i < data.length; i++) {
   const p = data[i];
