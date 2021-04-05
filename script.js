@@ -146,7 +146,7 @@ for (let y = 0; y < grids; y++) {
     gridToVertex[x + y * samplePoints] = [vx, vy];
 
     ctx.setLineDash([]);
-    ctx.strokeStyle = "blue";
+    ctx.strokeStyle = "#00f8";
     if (y !== 0 && edges & 0b0001) {
       const [vx_, vy_] = gridToVertex[x + (y - 1) * samplePoints];
       ctx.beginPath();
