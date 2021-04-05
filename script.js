@@ -24,16 +24,16 @@ const cornersToEdges = new Uint8Array(1 << 4);
   }
 }
 
-const data = new Uint8Array(grids * grids);
+const data = new Uint8Array(samplePoints * samplePoints);
 function data_set(x, y, value) {
-  data[y * grids + x] = value;
+  data[x + y * samplePoints] = value;
 }
-data_set(1, 0, 1);
-data_set(0, 1, 1);
-data_set(1, 1, 1);
-data_set(2, 1, 1);
 data_set(1, 2, 1);
+data_set(2, 1, 1);
 data_set(2, 2, 1);
+data_set(2, 3, 1);
+data_set(3, 2, 1);
+data_set(3, 3, 1);
 
 const c = document.getElementById("c");
 c.style.width = `${worldSize}px`;
@@ -83,9 +83,9 @@ for (let i = 0; i < data.length; i++) {
   const p = data[i];
   if (p === 0) continue;
 
-  const x = (i % grids) * gridSize;
-  const y = parseInt(i / grids) * gridSize;
+  const x = (i % samplePoints) * gridSize;
+  const y = parseInt(i / samplePoints) * gridSize;
 
   ctx.fillStyle = "red";
-  ctx.fillRect(x + gridSize - 4, y + gridSize - 4, 8, 8);
+  ctx.fillRect(x - 4, y - 4, 8, 8);
 }
