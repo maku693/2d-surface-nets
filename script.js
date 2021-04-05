@@ -88,3 +88,78 @@ for (let i = 0; i < data.length; i++) {
   ctx.fillStyle = "#f004";
   ctx.fillRect(x - gridSize / 2, y - gridSize / 2, gridSize, gridSize);
 }
+
+ctx.fillStyle = "blue";
+
+const gridToVertex = {};
+
+for (let y = 0; y < grids; y++) {
+  for (let x = 0; x < grids; x++) {
+    ctx.setLineDash([5, 5]);
+    ctx.strokeStyle = "green";
+
+    let corners = 0;
+
+    for (let v = 0; v < 2; v++) {
+      for (let u = 0; u < 2; u++) {
+        const p = data[x + u + (y + v) * samplePoints];
+        corners |= p << (u + v * 2);
+      }
+    }
+
+    const edges = cornersToEdges[corners];
+
+    let edgeCount = 0;
+    let dx = 0;
+    let dy = 0;
+    for (let j = 0; j < 4; j++) {
+      if (!(edges & (1 << j))) continue;
+      edgeCount++;
+
+      const e0 = squareEdges[j * 2];
+      const e1 = squareEdges[j * 2 + 1];
+
+      const e0x = e0 % 2;
+      const e0y = parseInt(e0 / 2);
+      const e1x = e1 % 2;
+      const e1y = parseInt(e1 / 2);
+
+      ctx.beginPath();
+      ctx.moveTo((x + e0x) * gridSize, (y + e0y) * gridSize);
+      ctx.lineTo((x + e1x) * gridSize, (y + e1y) * gridSize);
+      ctx.stroke();
+
+      dx += (e0x + e1x) / 2;
+      dy += (e0y + e1y) / 2;
+    }
+
+    if (edgeCount === 0) continue;
+
+    dx /= edgeCount;
+    dy /= edgeCount;
+
+    const vx = (x + dx) * gridSize;
+    const vy = (y + dy) * gridSize;
+
+    ctx.fillRect(vx - 3, vy - 3, 6, 6);
+
+    gridToVertex[x + y * samplePoints] = [vx, vy];
+
+    ctx.setLineDash([]);
+    ctx.strokeStyle = "blue";
+    if (y !== 0 && edges & 0b0001) {
+      const [vx_, vy_] = gridToVertex[x + (y - 1) * samplePoints];
+      ctx.beginPath();
+      ctx.moveTo(vx_, vy_);
+      ctx.lineTo(vx, vy);
+      ctx.stroke();
+    }
+    if (x !== 0 && edges & 0b0010) {
+      const [vx_, vy_] = gridToVertex[x - 1 + y * samplePoints];
+      ctx.beginPath();
+      ctx.moveTo(vx_, vy_);
+      ctx.lineTo(vx, vy);
+      ctx.stroke();
+    }
+  }
+}
