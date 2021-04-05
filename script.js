@@ -28,11 +28,11 @@ const data = new Uint8Array(samplePoints * samplePoints);
 function data_set(x, y, value) {
   data[x + y * samplePoints] = value;
 }
-data_set(1, 2, 1);
 data_set(2, 1, 1);
+data_set(1, 2, 1);
 data_set(2, 2, 1);
-data_set(2, 3, 1);
 data_set(3, 2, 1);
+data_set(2, 3, 1);
 data_set(3, 3, 1);
 
 const c = document.getElementById("c");
