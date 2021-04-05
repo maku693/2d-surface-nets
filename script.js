@@ -85,4 +85,6 @@ for (let i = 0; i < data.length; i++) {
 
   ctx.fillStyle = "red";
   ctx.fillRect(x - 4, y - 4, 8, 8);
+  ctx.fillStyle = "#f004";
+  ctx.fillRect(x - gridSize / 2, y - gridSize / 2, gridSize, gridSize);
 }
