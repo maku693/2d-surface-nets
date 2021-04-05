@@ -26,6 +26,8 @@ c.height = 320;
 const ctx = c.getContext("2d");
 ctx.font = "10px monospace";
 ctx.textAlign = "center";
+ctx.fillStyle = "white";
+ctx.fillRect(0, 0, c.width, c.height);
 ctx.translate(0.5, 0.5);
 
 for (let i = 0; i < edge_table.length; i++) {
